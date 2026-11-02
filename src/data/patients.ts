@@ -6,6 +6,8 @@
  */
 export interface ViolationDef {
   id: string;
+  /** Shoe colour for their walking feet (DISPLAY.walk.shoes when left out). */
+  shoes?: number;
   /** What the patient does, shown in their speech bubble. */
   action: string;
   /** Dr. Eugene's reaction; one is picked at random. Also used for anyone without their own lines. */

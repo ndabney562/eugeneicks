@@ -39,4 +39,31 @@ export const DISPLAY = {
     /** How long a full fade takes. */
     ms: 180,
   },
+  /**
+   * Walking feet: two shoes step out from under doctors, Pals and patients, with a bob on each step. Sized for the
+   * 96 px doctors; smaller characters scale everything down. Visual only (aim, hitboxes and turning don't change).
+   */
+  walk: {
+    /** Px of travel for one full stride (left step + right step). */
+    stride: 46,
+    /** How far a foot reaches ahead of (or behind) the hips, px: far enough for the toes to peek out past the coat. */
+    reach: 28,
+    /** The doctors' hips sit this far behind the sprite's centre (their coats are drawn back from it, their heads forward), px. */
+    hips: -2,
+    /** Each foot's distance to the side of the centre line, px. */
+    spacing: 10,
+    /** Shoe size, px (long side along the walking direction). */
+    shoeLength: 20,
+    shoeWidth: 11,
+    /** Squash-and-stretch on each step (share of the body's scale). Off with Reduce Motion. */
+    bob: 0.06,
+    /** How quickly the feet start stepping and settle when the character stops (per-frame smoothing at 60 fps). */
+    ease: 0.25,
+    /** Px moved per frame that still counts as standing still (being nudged). */
+    still: 0.2,
+    /** A jump bigger than this in one frame is a teleport (spawn, respawn), not a step. */
+    teleport: 40,
+    /** Default shoe colour: dark clogs. */
+    shoes: 0x2e3440,
+  },
 };

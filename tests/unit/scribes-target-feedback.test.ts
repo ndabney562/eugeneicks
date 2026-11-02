@@ -65,7 +65,9 @@ vi.mock('phaser', () => {
       GameObjects: {
         Image: MockImage,
         Graphics: MockGraphics,
+        Events: { DESTROY: 'destroy' },
       },
+      Scenes: { Events: { POST_UPDATE: 'postupdate', SHUTDOWN: 'shutdown' } },
       Math: {
         Distance: {
           Between: (x1: number, y1: number, x2: number, y2: number) => Math.hypot(x2 - x1, y2 - y1),
@@ -118,6 +120,10 @@ describe('Scribes Target-Focus Feedback and Anti-Oscillation Hysteresis', () => 
             rotation: 0,
             visible: false,
             depth: 0,
+            width: 96,
+            once: vi.fn(),
+            off: vi.fn(),
+            setRotation() { return this; },
             setPosition(x: number, y: number) { this.x = x; this.y = y; return this; },
             setDepth(d: number) { this.depth = d; return this; },
             setVisible(v: boolean) { this.visible = v; return this; },
@@ -133,6 +139,7 @@ describe('Scribes Target-Focus Feedback and Anti-Oscillation Hysteresis', () => 
           killTweensOf: vi.fn(),
         },
         time: { now: 1000 },
+        events: { on: vi.fn(), once: vi.fn(), off: vi.fn() },
         scene: { isActive: () => true },
       },
       player: { x: 500, y: 500, rotation: 0, dead: false },

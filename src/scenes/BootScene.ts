@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { drawProviderPreview, type PreviewProvider } from './providerArt';
 import { registerPortraits } from '../ui/menuTheme';
 import { COLORS } from '../config/theme';
+import { DISPLAY } from '../config/display';
 import { GERMS, type GermDef } from '../data/germs';
 import { VIOLATIONS, type ViolationDef } from '../data/patients';
 import { EQUIPMENT, STARTING_EQUIPMENT } from '../data/equipment';
@@ -52,6 +53,7 @@ export class BootScene extends Phaser.Scene {
     this.makeAlexandra();
     this.makeFloorTile();
     this.makeShadow();
+    this.makeShoe();
     for (const def of Object.values(GERMS)) this.makeGerm(def);
     for (const def of VIOLATIONS) this.makePatient(def);
     this.makeDroplet();
@@ -535,6 +537,17 @@ export class BootScene extends Phaser.Scene {
     g.fillStyle(0x000000, 0.12).fillEllipse(32, 16, 62, 28);
     g.fillStyle(0x000000, 0.22).fillEllipse(32, 16, 46, 20);
     g.generateTexture('shadow', 64, 32);
+    g.destroy();
+  }
+
+  /** One shoe seen from above, toe along +x: white so each character tints it, with a darker sole edge. */
+  private makeShoe(): void {
+    const { shoeLength: l, shoeWidth: w } = DISPLAY.walk;
+    const g = this.add.graphics();
+    g.fillStyle(0x9a9a9a).fillEllipse(l / 2 + 1, w / 2 + 1, l, w);
+    g.fillStyle(0xffffff).fillEllipse(l / 2 + 1, w / 2 + 1, l - 3, w - 3);
+    g.fillStyle(0xffffff, 0.6).fillEllipse(l / 2 + 3, w / 2, l / 3, w / 3);
+    g.generateTexture('shoe', l + 2, w + 2);
     g.destroy();
   }
 
