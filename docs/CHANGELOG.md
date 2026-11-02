@@ -2,6 +2,8 @@
 
 ## Unreleased: EUGENEICKS
 
+- **Easier menu tabs.** The title's PROVIDERS, LOCKER, BOARD, ATLAS and LEADERBOARD tabs are bigger, sit a little
+  lower and closer to the middle, and the whole pill takes the tap.
 - **Walking feet.** Eugene, the Pals and patients now take real steps: two shoes peek out from under them and
   alternate as they walk, with a little bob on each footfall, and settle side by side when they stop. Tatiana
   floats, so no feet. Reduce Motion turns the bob off; the feet still step.

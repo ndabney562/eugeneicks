@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { MENU } from './menuTheme';
+import { DISPLAY } from '../config/display';
 import { progress, doctorUnlocked } from '../core/progress';
 import { settings, saveSettings } from '../core/settings';
 import { characterById } from '../data/characters';
@@ -237,26 +238,34 @@ export function renderMenuTopPanel(
 
     // 2. Center Tab Pills
     if (activeTab === 'title') {
+      // Pulled in from the screen's top edge and gathered toward the middle, where thumbs reach them more easily
       const navStartX = docPillX + docPillW + 8;
       const navEndX = statsPillX - 8;
       const navAvailW = Math.max(340, navEndX - navStartX);
-      const slot = navAvailW / titleTabs.length;
+      const navW = Math.max(340, navAvailW * DISPLAY.titleTabs.widthShare);
+      const navLeft = navStartX + (navAvailW - navW) / 2;
+      const slot = navW / titleTabs.length;
+      const tabY = centerY + DISPLAY.titleTabs.drop;
 
       titleTabs.forEach((tab, i) => {
         const btn = tabButtons.get(tab.id);
         if (btn) {
-          if (slot < 92) {
-            btn.setFontSize(10).setPadding(5, 5);
-          } else if (slot < 115) {
-            btn.setFontSize(11).setPadding(7, 6);
+          const k = DISPLAY.titleTabs.scale;
+          if (slot < 92 * k) {
+            btn.setFontSize(Math.round(10 * k)).setPadding(5 * k, 5 * k);
+          } else if (slot < 115 * k) {
+            btn.setFontSize(Math.round(11 * k)).setPadding(7 * k, 6 * k);
           } else {
-            btn.setFontSize(13).setPadding(10, 7);
+            btn.setFontSize(Math.round(13 * k)).setPadding(10 * k, 7 * k);
           }
-          const btnX = navStartX + slot * (i + 0.5);
-          btn.setPosition(btnX, centerY);
+          const btnX = navLeft + slot * (i + 0.5);
+          btn.setPosition(btnX, tabY);
           const pw = Math.min(slot - 4, btn.width + 4);
-          const ph = 36;
-          drawGlassPill(btnX - pw / 2, centerY - ph / 2, pw, ph, 14, false, hoveredTab === tab.id);
+          const ph = Math.round(36 * k);
+          drawGlassPill(btnX - pw / 2, tabY - ph / 2, pw, ph, 14, false, hoveredTab === tab.id);
+          // The whole pill (and a little around it) takes the tap, not just the label
+          const hitW = Math.max(btn.width, Math.min(slot, pw + 8)), hitH = ph + 10;
+          btn.input?.hitArea?.setTo?.((btn.width - hitW) / 2, (btn.height - hitH) / 2, hitW, hitH);
         }
       });
     } else if (activeTabBadge) {
