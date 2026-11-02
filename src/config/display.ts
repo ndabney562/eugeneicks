@@ -22,6 +22,12 @@ export const DISPLAY = {
   /** Share of the poster's cropped height taken from the top (the rest from the floor behind the bottom pills). */
   titleCropTop: 0.2,
   /**
+   * The title's tab row (PROVIDERS, LOCKER...): px it sits below the header pills, away from the screen's top edge,
+   * the share of the free width between those pills it spans, so the outer tabs sit nearer the middle, and how much
+   * bigger than the header's other text the tabs are drawn, for easier tapping.
+   */
+  titleTabs: { drop: 14, widthShare: 0.82, scale: 1.25 },
+  /**
    * World signs (room prices, station labels, door signs) fade while a HUD control, banner or toast covers them,
    * or while they run off the screen edge, so no two pieces of text are read on top of each other.
    */
