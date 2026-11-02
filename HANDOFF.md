@@ -15,10 +15,16 @@
 - Included in the first commit: game controllers and the competitive scorecard, and iPad support (HUD and Locker
   fit checks at iPad sizes, 13" iPad screenshots).
 - Leaderboard: new D1 database `eugeneicks-leaderboard-db` (empty, created 2026-11-02); `worker/wrangler.toml`
-  points at it. The worker `eugeneicks-leaderboard` still needs deploying (see Next step).
+  points at it. The worker `eugeneicks-leaderboard` is deployed (https://eugeneicks-leaderboard.eugeneicks.workers.dev);
+  the old repo, worker and database are deleted.
+- 2026-11-02, PR #3: walking feet. Two tinted shoes step out from under Eugene, the Pals and patients
+  (`src/entities/Walker.ts`, math in `src/core/walk.ts`, tuning in `DISPLAY.walk`). Tatiana floats, so she has none.
+  Every shoe is dark grey (`DISPLAY.walk.shoes`); characters, Pals and patient types take an optional `shoes` colour.
+  Noah approved the look.
+- 2026-11-02, PR #4: the title's tab pills are 25% bigger, lower and nearer the middle, and the whole pill takes the
+  tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
-- `feat/walking-feet`: Noah's approved design spec only (`docs/superpowers/specs/2026-11-01-walking-feet-design.md`).
 - iCloud saves: design drafted, not started in the repo. Draft merge module at
   `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
   totals take the max, achievements and purchases union, spendable balances from the device that played last). Plan:
@@ -28,10 +34,7 @@
   screen, never mid-shift; reload `progress.ts`/`achievements.ts` state after a merge.
 
 ## Next step (exact)
-0. [Assigned: Noah] Delete the old public repo (needs a one-time login scope):
-   `gh auth refresh -h github.com -s delete_repo`, then `gh repo delete ndabney562/<old repo name> --yes`.
-   Also merge ai-scheduled PR #3 and empty `~/.Trash/eugeneicks-cleanup-2026-11-02/` when ready.
-1. [Assigned: Noah] In Terminal: `cd ~/eugeneicks/worker && npx wrangler d1 execute eugeneicks-leaderboard-db --remote --file schema.sql && npx wrangler deploy`, then delete the old leaderboard worker and its database in the Cloudflare dashboard (Workers & Pages, and D1).
+1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
 2. [Assigned: Claude Code] iCloud saves (scorecard row 6) per the plan above, then accessibility (row 9: larger-text
    option, germ tells that don't rely on colour).
 3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
@@ -44,13 +47,16 @@
 
 ## Blockers
 - Cloudflare deploys and GitHub repo deletion are blocked for Claude (auto-mode check, missing `delete_repo` scope); Noah runs those.
+- GitHub's macOS runners are short on capacity: iOS CI run 41485107835 was never picked up (no code failure).
 
 ## Last test result
+- 2026-11-02, Noah's Mac, PR #4 (tabs): typecheck, unit 206/206, build, bundle, regression 162 passed, smoke
+  207/0; PR #3 (feet): unit 213/213, regression 164, smoke 207/0. No `ios/` changes since the first commit.
 - 2026-11-02, Noah's Mac, before the first commit: typecheck OK; build OK; unit, smoke and Playwright regression all
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- 7a6b7a0 (main, PR #1 merged; Pages live at https://ndabney562.github.io/eugeneicks/, 2026-11-02).
+- 4c2b246 (main, PR #4 merged; Pages live at https://ndabney562.github.io/eugeneicks/, 2026-11-02).
 
 ## Model + timestamp
 - Claude Code (claude-opus-5-5), 2026-11-02 EST.
