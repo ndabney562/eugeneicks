@@ -3,6 +3,7 @@ import { BALANCE } from '../config/balance';
 import { runRng } from '../core/rng';
 import type { ViolationDef } from '../data/patients';
 import { SpeechBubble } from '../ui/SpeechBubble';
+import { Walker } from './Walker';
 
 /**
  * A patient wandering the waiting room. Solid to Eugene and germs. Pooled by
@@ -21,11 +22,13 @@ export class Patient extends Phaser.Physics.Arcade.Sprite {
   private goalSetAt = 0;
   leaveAt = 0;
   nextViolationAt = 0;
-  private step = 0;
+  private readonly walker: Walker;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'patient-cougher');
     this.bubble = new SpeechBubble(scene);
+    // Their shoulders sit about 2 px behind the centre of the 64 px texture
+    this.walker = new Walker(scene, this, { hips: -3 });
   }
 
   enter(def: ViolationDef, x: number, y: number, time: number): void {
@@ -38,6 +41,8 @@ export class Patient extends Phaser.Physics.Arcade.Sprite {
     this.enableBody(true, x, y, true, true);
     this.setCircle(cfg.radius, this.width / 2 - cfg.radius, this.height / 2 - cfg.radius);
     this.setPushable(false).setDepth(8).clearTint().setAlpha(1).setScale(1);
+    this.walker.setShoes(def.shoes);
+    this.walker.reset();
     this.exit.set(x, y);
     this.leaveAt = time + cfg.stayMs;
     this.nextViolationAt = time + runRng.patients.between(cfg.violationEveryMs) / 2;
@@ -60,10 +65,6 @@ export class Patient extends Phaser.Physics.Arcade.Sprite {
       const a = Phaser.Math.Angle.BetweenPoints(this, target);
       this.setVelocity(Math.cos(a) * speed, Math.sin(a) * speed);
       this.rotation = Phaser.Math.Angle.RotateTo(this.rotation, backwards ? Phaser.Math.Angle.Wrap(a + Math.PI) : a, 0.1 * (dtMs / (1000 / 60)));
-      // Shuffle
-      this.step += dtMs / 120;
-      const s = Math.sin(this.step) * 0.04;
-      this.setScale(1 + s, 1 - s);
     }
     this.bubble.follow();
   }

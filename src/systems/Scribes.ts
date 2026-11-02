@@ -9,6 +9,7 @@ import type { Germ } from '../entities/Germ';
 import type { Patient } from '../entities/Patient';
 import type { Player } from '../entities/Player';
 import { SpeechBubble } from '../ui/SpeechBubble';
+import { Walker } from '../entities/Walker';
 import type { FlowField } from './FlowField';
 import type { Fx } from './Fx';
 import type { PatientDirector } from './PatientDirector';
@@ -76,6 +77,8 @@ class Scribe {
   constructor(scene: Phaser.Scene, readonly def: ScribeDef, readonly side: number) {
     this.shadow = scene.add.image(0, 0, 'shadow').setDepth(9).setVisible(false);
     this.img = scene.add.image(0, 0, `scribe-${def.id}`).setDepth(9.8).setVisible(false);
+    // Tatiana floats, so no feet
+    if (def.id !== 'alexandra') new Walker(scene, this.img, { shoes: def.shoes });
     this.bubble = new SpeechBubble(scene);
     if (scene.add?.graphics) {
       this.reticle = scene.add.graphics().setDepth(9.6).setVisible(false);
@@ -413,7 +416,6 @@ export class Scribes {
       const tx = s.distraction.x;
       const ty = s.distraction.y;
       const d = Phaser.Math.Distance.Between(img.x, img.y, tx, ty);
-      let moving = false;
       if (d > 15) {
         let gx = tx, gy = ty;
         if (!flow.lineClear(img.x, img.y, tx, ty)) {
@@ -428,11 +430,7 @@ export class Scribes {
         const stepLen = Math.min(speed, d);
         this.place(s, img.x + Math.cos(a) * stepLen, img.y + Math.sin(a) * stepLen);
         img.rotation = Phaser.Math.Angle.RotateTo(img.rotation, a, 0.15);
-        moving = true;
       }
-      s.step += moving ? dtMs / 110 : 0;
-      const bob = moving ? Math.sin(s.step) * 0.05 : 0;
-      img.setScale(1 + bob, 1 - bob);
       return;
     }
 
@@ -498,7 +496,7 @@ export class Scribes {
     }
     if (germ) img.rotation = Phaser.Math.Angle.RotateTo(img.rotation, Phaser.Math.Angle.Between(img.x, img.y, germ.x, germ.y), 0.3);
     else if (patient) img.rotation = Phaser.Math.Angle.RotateTo(img.rotation, Phaser.Math.Angle.Between(img.x, img.y, patient.x, patient.y), 0.3);
-    // Tatiana floats and undulates as an ethereal cloud essence; others walk bob
+    // Tatiana floats and undulates as an ethereal cloud essence (the others' feet and step bob are their Walker)
     if (s.def.id === 'alexandra') {
       s.step += dtMs / 180;
       const hover = Math.sin(s.step) * 0.08;
@@ -506,10 +504,6 @@ export class Scribes {
       if (moving && Math.random() < 0.25) {
         this.host.fx.nozzleMist(img.x, img.y, 0, 360, s.def.color, 1);
       }
-    } else {
-      s.step += moving ? dtMs / 110 : 0;
-      const bob = moving ? Math.sin(s.step) * 0.05 : 0;
-      img.setScale(1 + bob, 1 - bob);
     }
   }
 

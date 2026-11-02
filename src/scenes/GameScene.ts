@@ -322,7 +322,7 @@ export class GameScene extends Phaser.Scene {
     }
     // The Miracle Cure's reward: Eugene wears his scrub cap from then on
     const capped = this.character.id === 'eugene' && progress().owned.includes('scrubCap');
-    this.player = new Player(this, room.playerSpawn.x, room.playerSpawn.y, capped ? 'eugene-cap' : this.character.id === 'dhiwya' ? `dhiwya-${hashSeed(String(runSeed())) % 3}` : this.character.id);
+    this.player = new Player(this, room.playerSpawn.x, room.playerSpawn.y, capped ? 'eugene-cap' : this.character.id === 'dhiwya' ? `dhiwya-${hashSeed(String(runSeed())) % 3}` : this.character.id, this.character.shoes);
     const passive = this.character.passive;
     if (passive.maxHp) this.player.maxHp = this.player.hp = this.player.maxHp + passive.maxHp;
     if (passive.moveSpeed) this.player.setSpeedMod('character', passive.moveSpeed);

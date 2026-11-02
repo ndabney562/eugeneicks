@@ -4,6 +4,7 @@ import type { InputState } from '../core/inputState';
 import { damp } from '../core/math';
 import { STARTING_EQUIPMENT } from '../data/equipment';
 import { TOOL_MUZZLE, toolTexture } from '../scenes/toolArt';
+import { Walker } from './Walker';
 
 /**
  * Dr. Eugene. Moves with the left stick, faces the right
@@ -14,8 +15,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   /** The tool in his hand, its own sprite laid over him (each tool looks different). */
   private readonly held: Phaser.GameObjects.Image;
   private heldId = STARTING_EQUIPMENT;
-  /** Distance walked, used to drive the waddle animation. */
-  private stride = 0;
   /** Max health (a Protein Bar raises it for the run). */
   maxHp = BALANCE.player.maxHp;
   hp = BALANCE.player.maxHp;
@@ -29,7 +28,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   /** While shoved, Eugene slides and can't steer. */
   private shovedUntil = 0;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, texture = 'eugene') {
+  constructor(scene: Phaser.Scene, x: number, y: number, texture = 'eugene', shoes?: number) {
     super(scene, x, y, texture);
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -42,6 +41,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.shadow = scene.add.image(x, y + 18, 'shadow').setDepth(9);
     this.held = scene.add.image(x, y, toolTexture(this.heldId)).setDepth(10.01);
+    // Before syncHeld (listeners run in order), so the tool gets this frame's step bob
+    new Walker(scene, this, { shoes });
     // After physics has moved him this frame, so the tool never trails a frame behind
     scene.events.on(Phaser.Scenes.Events.POST_UPDATE, this.syncHeld, this);
     this.once(Phaser.GameObjects.Events.DESTROY, () => {
@@ -58,7 +59,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.held.setTexture(this.scene.textures.exists(key) ? key : toolTexture(STARTING_EQUIPMENT));
   }
 
-  /** Keeps the held tool on him: same spot, turn, waddle, fade and hurt flash. */
+  /** Keeps the held tool on him: same spot, turn, step bob, fade and hurt flash. */
   private syncHeld(): void {
     const h = this.held;
     h.setPosition(this.x, this.y).setRotation(this.rotation).setScale(this.scaleX, this.scaleY)
@@ -166,16 +167,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.rotation = Phaser.Math.Angle.Wrap(this.rotation + Phaser.Math.Angle.Wrap(face - this.rotation) * t);
     }
 
-    // Waddle: a little squash-and-stretch while walking, settle when standing still
-    const moving = Math.hypot(input.moveX, input.moveY);
-    if (moving > 0) {
-      this.stride += (speed * moving * dtMs) / 1000;
-      const bob = Math.sin(this.stride / 18) * 0.06 * moving;
-      this.setScale(1 + bob, 1 - bob);
-    } else {
-      const settle = damp(0.2, dtMs);
-      this.setScale(Phaser.Math.Linear(this.scaleX, 1, settle), Phaser.Math.Linear(this.scaleY, 1, settle));
-    }
 
     this.shadow.setPosition(this.x, this.y + 18);
   }
