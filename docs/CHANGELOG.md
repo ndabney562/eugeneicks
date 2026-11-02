@@ -28,6 +28,8 @@
 - **One name for everything.** Eugene has no surname now (his chart and Crystal both just say EUGENE), the clinic is
   EugeneLand Urgent Care, and the web address is https://ndabney562.github.io/eugeneicks/. Saves made on the old
   web address don't carry over: everyone starts a fresh shift.
+- Opening a menu before its pictures finished loading (a quick tap on a slow connection) no longer loads them twice
+  or logs an error.
 - **New names for the whole staff.** Derick, Julian, Theo, Derulo, Priya, Sanjay, Marina, John, Karen and Gloria
   (providers), Karim, Nate, Gerald, Lena, Maria and Tatiana (staff), and Crystal the Practice Manager. Eugene
   stays Eugene. Saves carry over: only the names changed (full list in `docs/ASSETS.md`).

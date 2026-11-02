@@ -25,12 +25,26 @@ export type MenuBgFrame = typeof MENU_BG_FRAMES[number];
 /** Art only the Providers, Locker, Board and Leaderboard screens use: not loaded at boot. */
 const MENU_ART = { 'menu-sprites': 'assets/menu-sprites.jpg', 'menu-bgs': 'assets/menu-bgs.jpg' } as const;
 
-/** Queues whatever menu art isn't loaded yet. Menu scenes call it from preload(), so they wait for it. */
+let menuArtLoads = 0;
+
+/**
+ * Queues whatever menu art isn't loaded yet. Menu scenes call it from preload(), so they wait for it. The title may
+ * still be loading the same art when a menu opens, so each load uses its own key: the first copy to arrive takes the
+ * real name and a later copy is dropped (two loads of one key fail with "Texture key already in use").
+ */
 export function queueMenuArt(scene: Phaser.Scene): boolean {
   const missing = Object.entries(MENU_ART).filter(([key]) => !scene.textures.exists(key));
   if (!missing.length) return false;
-  for (const [key, url] of missing) scene.load.image(key, url);
-  scene.load.once(Phaser.Loader.Events.COMPLETE, () => registerMenuFrames(scene));
+  const load = ++menuArtLoads;
+  for (const [key, url] of missing) {
+    const copy = `${key}@${load}`;
+    scene.textures.once(Phaser.Textures.Events.ADD_KEY + copy, () => {
+      if (scene.textures.exists(key)) scene.textures.remove(copy);
+      else scene.textures.renameTexture(copy, key);
+      registerMenuFrames(scene);
+    });
+    scene.load.image(copy, url);
+  }
   return true;
 }
 
