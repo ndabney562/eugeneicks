@@ -28,6 +28,9 @@
   screen, never mid-shift; reload `progress.ts`/`achievements.ts` state after a merge.
 
 ## Next step (exact)
+0. [Assigned: Noah] Delete the old public repo (needs a one-time login scope):
+   `gh auth refresh -h github.com -s delete_repo`, then `gh repo delete ndabney562/<old repo name> --yes`.
+   Also merge ai-scheduled PR #3 and empty `~/.Trash/eugeneicks-cleanup-2026-11-02/` when ready.
 1. [Assigned: Noah] In Terminal: `cd ~/eugeneicks/worker && npx wrangler d1 execute eugeneicks-leaderboard-db --remote --file schema.sql && npx wrangler deploy`, then delete the old leaderboard worker and its database in the Cloudflare dashboard (Workers & Pages, and D1).
 2. [Assigned: Claude Code] iCloud saves (scorecard row 6) per the plan above, then accessibility (row 9: larger-text
    option, germ tells that don't rely on colour).
@@ -40,14 +43,14 @@
 5. [Assigned: Noah] Delete the old app from the iPhone (its bundle ID changed, so the new build installs alongside).
 
 ## Blockers
-- Cloudflare deploys and GitHub repo deletion are blocked for Claude by the auto-mode permission check; Noah runs those.
+- Cloudflare deploys and GitHub repo deletion are blocked for Claude (auto-mode check, missing `delete_repo` scope); Noah runs those.
 
 ## Last test result
 - 2026-11-02, Noah's Mac, before the first commit: typecheck OK; build OK; unit, smoke and Playwright regression all
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- See `git log -1` (first commit of the fresh repo).
+- 7a6b7a0 (main, PR #1 merged; Pages live at https://ndabney562.github.io/eugeneicks/, 2026-11-02).
 
 ## Model + timestamp
 - Claude Code (claude-opus-5-5), 2026-11-02 EST.
