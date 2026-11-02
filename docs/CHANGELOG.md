@@ -2,6 +2,10 @@
 
 ## Unreleased: EUGENEICKS
 
+- **iCloud saves (iPhone and iPad app).** Your records, Pals, purchases, achievements and balances follow your
+  Apple ID: a second device or a reinstall picks them up. Playing on two devices merges them, so nothing earned on
+  either is lost (the best records, every unlock, and the balances of whichever device played last). The merge
+  happens on the title screen, never mid-shift. Settings and a paused shift stay on each device.
 - **Easier menu tabs.** The title's PROVIDERS, LOCKER, BOARD, ATLAS and LEADERBOARD tabs are bigger, sit a little
   lower and closer to the middle, and the whole pill takes the tap.
 - **Walking feet.** Eugene, the Pals and patients now take real steps: two shoes peek out from under them and

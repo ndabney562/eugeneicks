@@ -20,8 +20,9 @@ Status as of Oct 30, 2026. **[Noah]** marks steps only Noah can do (Apple accoun
    (must be unique on the store), primary category Games › Action.
 2. **[Noah] URLs.** Privacy Policy URL: the page above. Support URL (required):
    https://github.com/ndabney562/eugeneicks/issues, or an email page if you prefer.
-3. **[Noah] App Privacy answers:** "Data Not Collected". Game Center scores go to Apple, and Apple says
-   developers don't disclose data Apple collects.
+3. **[Noah] App Privacy answers:** "Data Not Collected". Game Center scores go to Apple, and the iCloud copy
+   of the saves lives in the player's own iCloud account (key-value storage); Apple says developers don't
+   disclose data Apple collects or that stays in the user's iCloud.
 4. **[Noah] Age rating questionnaire** (Apple computes the rating from these):
    | Question | Answer | Why |
    |---|---|---|

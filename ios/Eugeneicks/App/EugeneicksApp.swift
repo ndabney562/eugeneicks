@@ -28,6 +28,8 @@ struct AppEnvironment {
     var colorScheme: ColorScheme?
     /// Only the real app signs in; tests never see Game Center.
     var gameCenter: GameCenterService?
+    /// Only the real app keeps its saves in iCloud.
+    var cloud: UbiquitousSaves?
 
     static func make(arguments: [String] = ProcessInfo.processInfo.arguments) -> AppEnvironment {
         if arguments.contains("-ui-testing") {
@@ -43,10 +45,12 @@ struct AppEnvironment {
             let store = GameStore(cache: MemorySnapshotCache())
             return AppEnvironment(store: store, game: .web(WebGameHost(store: store, ephemeral: true)))
         }
-        let store = GameStore(cache: FileSnapshotCache.standard(), haptics: UIKitHaptics())
+        let cloud = UbiquitousSaves()
+        let store = GameStore(cache: FileSnapshotCache.standard(), haptics: UIKitHaptics(), cloud: cloud.makeSync())
+        cloud.watch(store)
         let gameCenter = GameCenterService()
         gameCenter.start()
-        return AppEnvironment(store: store, game: .web(WebGameHost(store: store)), gameCenter: gameCenter)
+        return AppEnvironment(store: store, game: .web(WebGameHost(store: store)), gameCenter: gameCenter, cloud: cloud)
     }
 }
 
