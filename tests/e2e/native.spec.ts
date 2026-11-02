@@ -26,7 +26,7 @@ test('native host boots to the web title with a snapshot, validates settings, an
   expect(snapshot.art).toBeUndefined();
   await page.evaluate(() => window.eugeneicksNative.setSettings({ difficulty: 'walkIn', sound: 'invalid', character: 'missing' }));
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('eugeneicks.settings.v1')!))).toMatchObject({ difficulty: 'walkIn', sound: true, character: 'eugene' });
-  expect(await page.evaluate(() => Object.keys(window.eugeneicksNative).sort())).toEqual(['refresh', 'setSettings']);
+  expect(await page.evaluate(() => Object.keys(window.eugeneicksNative).sort())).toEqual(['applyCloud', 'refresh', 'setSettings']);
 
   await tapObject(page, 'Title', 'boardButton');
   await active(page, 'Board');
@@ -40,6 +40,45 @@ test('native host boots to the web title with a snapshot, validates settings, an
   await active(page, 'Hud');
   await page.waitForFunction(() => window.__native.some((m) => m.type === 'playing'));
   expect(await page.evaluate(() => window.game.scene.getScene('Game').shift.difficulty)).toBe('walkIn');
+});
+
+test('iCloud: another device\'s saves merge on the title, and wait for it during a shift', async ({ page }) => {
+  await bootAsApp(page);
+  await active(page, 'Title');
+  const lastCloud = () => page.evaluate(() => window.__native.filter((m) => m.type === 'cloudSave').at(-1));
+  expect(await lastCloud()).toMatchObject({ gen: 0, save: { v: 1, achievements: [] } });
+  const theirs = (credits: number, earned: number) => ({
+    v: 1, at: Date.now() + 60_000, save: null, achievements: [],
+    progress: { credits, earned, nps: 0, npsEarned: 0, owned: [], specialty: '', startTool: '', kills: { basic: 7 }, bank: 0, locker: {}, staff: {} },
+  });
+
+  // On the title: merged at once, the title redraws (one more ready) and the copy comes back numbered 1
+  const readies = await posted(page, 'ready');
+  await page.evaluate((copy) => window.eugeneicksNative.applyCloud(copy, 1), theirs(40, 90));
+  await page.waitForFunction((n) => window.__native.filter((m) => m.type === 'ready').length === n + 1, readies);
+  expect(await lastCloud()).toMatchObject({ gen: 1, save: { progress: { credits: 40, earned: 90, kills: { basic: 7 } } } });
+  expect(await page.evaluate(() => window.game.scene.getScene('Title').children.list.some((c: any) => /\b40\b/.test(c.text ?? '')))).toBe(true);
+
+  // The same copy again changes nothing: no redraw
+  await page.evaluate((copy) => window.eugeneicksNative.applyCloud(copy, 2), theirs(40, 90));
+  expect(await lastCloud()).toMatchObject({ gen: 2 });
+  expect(await posted(page, 'ready')).toBe(readies + 1);
+
+  // During a shift it waits, and posts from the shift keep the old number
+  await tapObject(page, 'Title', 'tap');
+  await active(page, 'Hud');
+  await page.evaluate((copy) => window.eugeneicksNative.applyCloud(copy, 3), theirs(70, 200));
+  await page.evaluate(() => window.eugeneicksNative.refresh());
+  expect(await lastCloud()).toMatchObject({ gen: 2, save: { progress: { earned: 90 } } });
+  await page.evaluate(() => window.game.scene.getScene('Game').endRun());
+  await active(page, 'GameOver');
+  await page.evaluate(() => { window.game.scene.getScene('GameOver').scene.start('Title'); });
+  await active(page, 'Title');
+  await expect.poll(lastCloud).toMatchObject({ gen: 3, save: { progress: { earned: 200 } } });
+
+  // A copy from a newer app is ignored
+  await page.evaluate(() => window.eugeneicksNative.applyCloud({ v: 2 }, 4));
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('eugeneicks.progress.v1')!).earned)).toBe(200);
 });
 
 test('every title-screen feature is reachable in the app', async ({ page }) => {
