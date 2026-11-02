@@ -62,6 +62,11 @@ function load(): Progress {
 
 let state = load();
 
+/** Re-reads the saved progress (another device's was just merged in: core/cloudSave.ts). */
+export function reloadProgress(): void {
+  state = load();
+}
+
 function save(): void {
   try {
     localStorage.setItem(KEY, JSON.stringify(state));

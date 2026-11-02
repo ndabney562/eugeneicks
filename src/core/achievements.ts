@@ -19,6 +19,12 @@ function load(): Set<string> {
 
 const unlocked = load();
 
+/** Re-reads the saved achievements (another device's were just merged in: core/cloudSave.ts). */
+export function reloadAchievements(): void {
+  unlocked.clear();
+  for (const id of load()) unlocked.add(id);
+}
+
 export function hasAchievement(id: string): boolean {
   return unlocked.has(id);
 }
