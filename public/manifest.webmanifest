@@ -1,0 +1,30 @@
+{
+  "name": "EUGENEICKS",
+  "short_name": "EUGENEICKS",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0d2b2e",
+  "theme_color": "#0d2b2e",
+  "icons": [
+    {
+      "src": "icons/icon-192.png?v=4",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png?v=4",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "id": "./",
+  "description": "A comedic clinic survival game. Pick a Pal, clock in, and disinfect the chaos.",
+  "categories": [
+    "games"
+  ],
+  "lang": "en"
+}

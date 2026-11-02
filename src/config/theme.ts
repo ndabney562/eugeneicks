@@ -1,0 +1,31 @@
+/** Placeholder art palette. Replaced by real art in the art pass. */
+export const COLORS = {
+  floorA: 0xd9e6e1,
+  floorB: 0xc9d9d3,
+  wall: 0x1f4f55,
+  wallTrim: 0x3f8a8f,
+  chair: 0x3a7bd5,
+  chairDark: 0x2a5ca3,
+  desk: 0x8a6a4a,
+  deskTop: 0xb8926a,
+  plant: 0x3fa34d,
+  pot: 0xa0522d,
+  table: 0x9c7a5a,
+  doorLocked: 0x7a3b3b,
+  coat: 0xfafafa,
+  coatShadow: 0xd8dde0,
+  scrubs: 0x1f2a44,
+  skin: 0xecbc98,
+  /** Slightly pinker skin where his hair has thinned at the front. */
+  skinTop: 0xf0b394,
+  /** Messy brown-grey hair, like Noah's title poster. */
+  hair: 0x6e5d4c,
+  hairStrand: 0x9a8a78,
+  mask: 0x9fd0ee,
+  maskFold: 0x6fa9cf,
+  stethoscope: 0x2b2f36,
+  bottle: 0xf6f8fa,
+  bottleCap: 0xd32f2f,
+  uiText: '#e8fff9',
+  uiAccent: '#7fffd4',
+};
