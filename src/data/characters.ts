@@ -34,6 +34,8 @@ export interface CharacterDef {
   /** NPS Scores to hire them (0 = always on shift). */
   price: number;
   second?: { name: string; button: string; price: number; cooldownMs: number };
+  /** Shoe colour for their walking feet (DISPLAY.walk.shoes when left out). */
+  shoes?: number;
 }
 
 export const CHARACTERS: CharacterDef[] = [

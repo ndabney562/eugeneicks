@@ -2,6 +2,9 @@
 
 ## Unreleased: EUGENEICKS
 
+- **Walking feet.** Eugene, the Pals and patients now take real steps: two shoes peek out from under them and
+  alternate as they walk, with a little bob on each footfall, and settle side by side when they stop. Tatiana
+  floats, so no feet. Reduce Motion turns the bob off; the feet still step.
 - **The game is EUGENEICKS now.** The name changes everywhere you see it: the browser tab, the loading screen, the
   pause screen, the iPhone home screen, the web app and the privacy policy.
 - **Noah's new icon.** Eugene with his 70% bottle is the app icon, the web icon and the iPhone launch logo.

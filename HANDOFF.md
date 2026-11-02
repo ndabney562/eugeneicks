@@ -57,3 +57,9 @@
 
 ## Read first
 - CLAUDE.md, AGENTS.md, PROJECT.md, docs/ROADMAP.md, docs/MY_CONTRIBUTIONS.md, docs/APP-STORE.md.
+
+<!-- hivemind:auto -->
+- **Last test result:** `Local (Noah's Mac): typecheck, build, unit 206/206, smoke 207/0, regression 162 passed, \`swift test\` 29/29, \`xcodebui` → result unknown (2026-11-02T09:32:04-0500)
+- **Last commit hash:** 6a36e55
+- **Model + timestamp:** claude / 2026-11-02T11:53:25-0500
+<!-- /hivemind:auto -->

@@ -18,6 +18,8 @@ export type ScribeId = 'omar' | 'alan' | 'donald' | 'selina' | 'elaine' | 'alexa
 
 export interface ScribeDef {
   id: ScribeId;
+  /** Shoe colour for their walking feet (DISPLAY.walk.shoes when left out). */
+  shoes?: number;
   name: string;
   /** Their job, for the board. */
   role: string;
