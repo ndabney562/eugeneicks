@@ -15,6 +15,8 @@ public enum BridgeMessage: Equatable, Sendable {
     /// The LEADERBOARD tab or button: show Game Center.
     case openGameCenter
     case haptic(HapticKind)
+    /// A copy of the game's saves for iCloud (JSON, keys sorted), numbered with the last iCloud copy it merged in.
+    case cloudSave(json: Data, gen: Int)
     /// Something this app version doesn't know (a newer game build): ignored.
     case unknown(String)
 
@@ -43,6 +45,10 @@ public enum BridgeMessage: Equatable, Sendable {
             return .openGameCenter
         case "snapshot":
             return .snapshot(try JSONDecoder().decode(GameSnapshot.self, from: data))
+        case "cloudSave":
+            guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let gen = object["gen"] as? Int, let save = object["save"] as? [String: Any] else { return .unknown("cloudSave") }
+            return .cloudSave(json: try JSONSerialization.data(withJSONObject: save, options: [.sortedKeys, .withoutEscapingSlashes]), gen: gen)
         case "haptic":
             guard let kind = envelope.kind.flatMap(HapticKind.init(rawValue:)) else { return .unknown("haptic") }
             return .haptic(kind)

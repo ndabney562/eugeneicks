@@ -38,13 +38,16 @@ public final class GameStore {
     @ObservationIgnored private let haptics: HapticPlaying?
     @ObservationIgnored private var throttle = HapticThrottle()
     @ObservationIgnored private let clock: () -> TimeInterval
+    @ObservationIgnored private let cloud: CloudSaveSync?
 
     public init(
         cache: SnapshotCaching,
         preferences: AppPreferences = AppPreferences(),
         haptics: HapticPlaying? = nil,
-        clock: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime }
+        clock: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
+        cloud: CloudSaveSync? = nil
     ) {
+        self.cloud = cloud
         self.cache = cache
         self.preferences = preferences
         self.haptics = haptics
@@ -70,6 +73,7 @@ public final class GameStore {
             let pending = queued
             queued.removeAll()
             pending.forEach { sink?.send($0) }
+            if let command = cloud?.commandForGame() { sink?.send(command) }
         case .playing:
             isShiftRunning = true
         case .snapshot(let next):
@@ -84,6 +88,8 @@ public final class GameStore {
         case .haptic(let kind):
             guard hapticsEnabled, throttle.allow(kind, at: clock()) else { return }
             haptics?.play(kind.style)
+        case .cloudSave(let json, let gen):
+            cloud?.received(json: json, gen: gen)
         case .unknown:
             break
         }
@@ -94,6 +100,15 @@ public final class GameStore {
         isGameReady = false
         isShiftRunning = false
         isSettingsPresented = false
+        cloud?.gameReset()
+    }
+
+    /// iCloud's copy changed (another device saved): the game merges it now if it's on the title screen, else at the
+    /// next one (it sends `ready` then).
+    public func cloudChanged() {
+        cloud?.cloudChanged()
+        guard isGameReady, let command = cloud?.commandForGame() else { return }
+        sink?.send(command)
     }
 
     // MARK: To the game

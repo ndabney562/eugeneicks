@@ -43,6 +43,8 @@ public struct SettingsPatch: Encodable, Equatable, Sendable {
 public enum BridgeCommand: Equatable, Sendable {
     case setSettings(SettingsPatch)
     case refresh
+    /// The saves in iCloud (an opaque JSON object), numbered so the game's next copy says it has merged them.
+    case applyCloud(json: Data, gen: Int)
 
     /// The JavaScript that runs it. Arguments are JSON-encoded, so no value can break out of the call.
     /// Does nothing if the game hasn't installed its bridge (a page that failed to load).
@@ -53,6 +55,12 @@ public enum BridgeCommand: Equatable, Sendable {
             call = "setSettings(\(Self.json(patch)))"
         case .refresh:
             call = "refresh()"
+        case .applyCloud(let json, let gen):
+            // Only JSON this side wrote out again goes into the script; anything else just asks for a snapshot
+            guard let object = try? JSONSerialization.jsonObject(with: json), object is [String: Any],
+                  let data = try? JSONSerialization.data(withJSONObject: object, options: [.sortedKeys, .withoutEscapingSlashes]),
+                  let text = String(data: data, encoding: .utf8) else { return Self.refresh.javaScript }
+            call = "applyCloud(\(text), \(gen))"
         }
         return "window.eugeneicksNative && window.eugeneicksNative.\(call);"
     }

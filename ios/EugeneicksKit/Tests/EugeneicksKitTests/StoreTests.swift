@@ -16,11 +16,12 @@ final class RecordingHaptics: HapticPlaying {
 func makeStore(
     snapshot: GameSnapshot? = .sample,
     haptics: RecordingHaptics? = nil,
-    now: @escaping () -> TimeInterval = { 0 }
+    now: @escaping () -> TimeInterval = { 0 },
+    cloud: CloudSaveSync? = nil
 ) -> (GameStore, RecordingSink, MemorySnapshotCache) {
     let cache = MemorySnapshotCache(snapshot)
     let defaults = UserDefaults(suiteName: "EugeneicksKitTests-\(UUID().uuidString)") ?? .standard
-    let store = GameStore(cache: cache, preferences: AppPreferences(defaults: defaults), haptics: haptics, clock: now)
+    let store = GameStore(cache: cache, preferences: AppPreferences(defaults: defaults), haptics: haptics, clock: now, cloud: cloud)
     let sink = RecordingSink()
     store.attach(sink)
     return (store, sink, cache)
