@@ -26,10 +26,10 @@
   tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
-- 2026-11-03: App Store submission. Store page filled through the API (see docs/APP-STORE.md "Store page"). PR #20
-  merged on local checks with Noah's OK (iOS CI not acquired again): controller badge keys, iOS version 1.0.
-  Archive 1.0 (53) from main 9f76e50 is in Xcode's Organizer for Noah to Distribute. Noah still does: App Privacy
-  "Data Not Collected" + Publish, App Review contact info + notes, pick build 53, Add for Review, Submit.
+- 2026-11-03: **EUGENEICKS 1.0 (53) submitted; App Store state WAITING_FOR_REVIEW.** Free, United States only.
+  Store page filled through the API (docs/APP-STORE.md "Store page"); Noah did App Privacy, review contact and the
+  Submit. Game Center enabled on the version and all 34 achievements + 3 leaderboards attached to the release.
+  PR #20 (controller keys, iOS version 1.0) merged on local checks with Noah's OK.
 - 2026-11-03, PR #14 merged (3a97c4f): PA Jin renamed Jaykwellen (Noah's call; id stays `jin` so saves and unlocks keep working;
   short/chart/surname JAYKWELLEN, fits the roster card and health bar). Feet step half as often
   (`DISPLAY.walk.stride` 46 → 92, Noah: "too fast, make 50% the speed").
@@ -60,6 +60,9 @@
   screen, never mid-shift; reload `progress.ts`/`achievements.ts` state after a merge.
 
 ## Next step (exact)
+0. [Assigned: Claude Code] Check the review: `ASC_KEY=~/Downloads/AuthKey_8N39839RBM.p8 ASC_ISSUER=<Noah's issuer ID>`
+   then `appStoreVersions` state (scripts in `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/app-store-listing/`).
+   If Apple rejects it, read the Resolution Center message (Noah pastes it) and fix.
 1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
 1a. [Assigned: Claude Code] Rerun iOS CI on main (`gh run rerun 41680963554`) until a runner picks it up.
 2. [Assigned: Noah] Try the slower feet and the "!" on a Sneezer on the iPhone. Optional follow-up: a LARGE

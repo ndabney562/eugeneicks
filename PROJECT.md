@@ -23,4 +23,4 @@ Goal: an App Store-ready iPhone game. Status from HANDOFF.md and docs/HANDOFF-AR
 - [x] App Store Connect record and Game Center upload (Noah)
 - [x] Bluetooth controller checked on the iPhone
 - [x] TestFlight build played on a real iPhone
-- [ ] Submitted for App Store review
+- [x] Submitted for App Store review
