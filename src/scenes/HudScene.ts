@@ -31,6 +31,7 @@ import type { GameScene } from './GameScene';
 import { HudButton } from '../ui/HudButton';
 import { VirtualJoystick } from '../ui/VirtualJoystick';
 import { PadReader } from '../core/gamepad';
+import { applyTextScale, scalable } from '../ui/textScale';
 
 /**
  * Screen-space overlay drawn above the game: touch joysticks, FPS counter,
@@ -76,6 +77,7 @@ export class HudScene extends Phaser.Scene {
   private soundToggle!: Phaser.GameObjects.Text;
   private musicToggle!: Phaser.GameObjects.Text;
   private autoRefillToggle!: Phaser.GameObjects.Text;
+  private textToggle!: Phaser.GameObjects.Text;
   private motionToggle!: Phaser.GameObjects.Text;
   /** Teach-as-you-play hint currently shown (one at a time), with an arrow toward its control. */
   private hintText!: Phaser.GameObjects.Text;
@@ -166,15 +168,15 @@ export class HudScene extends Phaser.Scene {
     const tag = { ...style, backgroundColor: '#0d2b2ecc', padding: { x: 8, y: 4 } };
     this.versionText = this.add.text(0, 0, __APP_VERSION__, { ...tag, fontSize: '14px' }).setOrigin(1, 0).setVisible(DEBUG.overlay);
     if (DISPLAY.showFps || DEBUG.overlay) this.fpsText = this.add.text(0, 0, '', { ...tag, fontSize: '16px', align: 'right' });
-    this.scoreText = this.add.text(0, 0, 'SCORE 0', { ...style, fontSize: '15px', fontStyle: '900', color: '#ffffff' }).setOrigin(0.5, 0.5).setShadow(0, 1, '#051314', 3);
-    this.roomText = this.add.text(0, 0, '', { ...style, fontSize: '14px', fontStyle: 'bold', color: '#e8fff9' }).setOrigin(1, 0).setShadow(0, 1, '#051314', 3);
+    this.scoreText = scalable(this.add.text(0, 0, 'SCORE 0', { ...style, fontSize: '15px', fontStyle: '900', color: '#ffffff' })).setOrigin(0.5, 0.5).setShadow(0, 1, '#051314', 3);
+    this.roomText = scalable(this.add.text(0, 0, '', { ...style, fontSize: '14px', fontStyle: 'bold', color: '#e8fff9' })).setOrigin(1, 0).setShadow(0, 1, '#051314', 3);
     const shift = (this.scene.get('Game') as GameScene).shift;
     const parts = shift.mods.map((id) => modifierById(id)).filter((m) => !!m).map((m) => `${m!.icon} ${m!.name.toUpperCase()}`);
     if (shift.difficulty !== 'urgent') parts.unshift(difficultyById(shift.difficulty).name.toUpperCase());
     if (shift.daily) parts.unshift("📋 TODAY'S SHIFT");
-    this.shiftText = this.add.text(0, 0, parts.join('  ·  '), { ...tag, fontSize: '14px', fontStyle: 'bold', color: '#ffe66d' })
+    this.shiftText = scalable(this.add.text(0, 0, parts.join('  ·  '), { ...tag, fontSize: '14px', fontStyle: 'bold', color: '#ffe66d' }))
       .setOrigin(1, 0).setVisible(parts.length > 0);
-    this.copaysText = this.add.text(0, 0, '$0 COPAYS', { ...style, fontSize: '15px', fontStyle: '900', color: COLORS.uiAccent }).setOrigin(0.5, 0.5).setShadow(0, 1, '#051314', 3);
+    this.copaysText = scalable(this.add.text(0, 0, '$0 COPAYS', { ...style, fontSize: '15px', fontStyle: '900', color: COLORS.uiAccent })).setOrigin(0.5, 0.5).setShadow(0, 1, '#051314', 3);
     this.streakText = this.add.text(0, 0, '', { ...style, fontSize: '18px', fontStyle: '900', color: '#ffe66d' })
       .setOrigin(0.5, 0).setShadow(0, 2, '#000', 4).setVisible(false);
     this.streakBar = this.add.graphics();
@@ -192,7 +194,7 @@ export class HudScene extends Phaser.Scene {
     for (let i = 0; i < 4; i++) {
       this.powerRows.push({
         icon: this.add.image(0, 0, 'pill').setScale(0.6).setVisible(false),
-        text: this.add.text(0, 0, '', { ...tag, fontSize: '14px', fontStyle: 'bold' }).setOrigin(0, 0.5).setVisible(false),
+        text: scalable(this.add.text(0, 0, '', { ...tag, fontSize: '14px', fontStyle: 'bold' })).setOrigin(0, 0.5).setVisible(false),
       });
     }
     this.powerBars = this.add.graphics();
@@ -210,7 +212,7 @@ export class HudScene extends Phaser.Scene {
     this.applyScheme(false);
     // ACHIEVEMENT toast, shown under the score
     this.toastName = this.add.text(0, -12, '', { ...style, fontSize: '20px', fontStyle: '900', color: '#ffe66d' }).setOrigin(0.5);
-    this.toastHow = this.add.text(0, 16, '', { ...style, fontSize: '15px', fontStyle: 'bold' }).setOrigin(0.5);
+    this.toastHow = scalable(this.add.text(0, 16, '', { ...style, fontSize: '15px', fontStyle: 'bold' })).setOrigin(0.5);
     this.toast = this.add.container(0, 0, [
       this.add.rectangle(0, 0, 10, 10, 0x0d2b2e, 0.92).setStrokeStyle(3, 0xffe66d, 0.9), this.toastName, this.toastHow,
     ]).setDepth(60).setVisible(false);
@@ -249,16 +251,16 @@ export class HudScene extends Phaser.Scene {
     this.swapButton = new HudButton(this, CONTROLS.buttons.swapRadius, 'SWAP', 0xffe66d, () => {
       inputState.swapRequested = true;
     }).setVisible(false);
-    this.toolText = this.add.text(0, 0, '', {
+    this.toolText = scalable(this.add.text(0, 0, '', {
       fontFamily: MENU.font, fontSize: '14px', fontStyle: '900', color: '#ffffff',
       backgroundColor: '#0c2528ee', padding: { x: 10, y: 5 },
-    }).setOrigin(1, 1).setShadow(0, 1, '#051314', 3);
+    })).setOrigin(1, 1).setShadow(0, 1, '#051314', 3);
 
     // USE pops up at supply carts (restock) and locked doors (buy them open)
     this.interactButton = new HudButton(this, CONTROLS.buttons.interactRadius, 'USE', 0x7fffd4, () => {
       inputState.interactRequested = true;
     }).setVisible(false);
-    this.interactNote = this.add.text(0, 0, '', { ...tag, fontSize: '13px', fontStyle: 'bold', align: 'center', color: '#ffe66d' })
+    this.interactNote = scalable(this.add.text(0, 0, '', { ...tag, fontSize: '13px', fontStyle: 'bold', align: 'center', color: '#ffe66d' }))
       .setOrigin(0.5, 1).setVisible(false);
 
     const onEquipment = (p: EquipmentChangedPayload) => {
@@ -835,9 +837,9 @@ export class HudScene extends Phaser.Scene {
     this.pauseTitle = this.add.text(0, 0, 'PAUSED', {
       fontFamily: MENU.font, fontSize: '56px', fontStyle: '900', color: '#ffffff',
     }).setOrigin(0.5).setShadow(0, 4, '#051314', 6);
-    this.pauseTip = this.add.text(0, 0, '', {
+    this.pauseTip = scalable(this.add.text(0, 0, '', {
       fontFamily: MENU.font, fontSize: '16px', fontStyle: 'italic', color: MENU.mint, align: 'center', wordWrap: { width: 680 },
-    }).setOrigin(0.5).setShadow(0, 2, '#051314', 4);
+    })).setOrigin(0.5).setShadow(0, 2, '#051314', 4);
     this.pauseVersion = this.add.text(0, 0, `EUGENEICKS ${__APP_VERSION__}`, {
       fontFamily: MENU.font, fontSize: '13px', fontStyle: 'bold', color: '#88a6a2',
     }).setOrigin(0.5, 1);
@@ -876,6 +878,13 @@ export class HudScene extends Phaser.Scene {
       saveSettings();
       this.refreshMotionToggle();
     });
+    this.textToggle = item('', () => {
+      settings.largeText = !settings.largeText;
+      saveSettings();
+      applyTextScale();
+      this.refreshTextToggle();
+      this.layout();
+    });
     this.achievementList = new AchievementList(this);
     this.achievementsItem = item('', () => this.achievementList.open());
     this.controlsToggle = item('', () => {
@@ -888,7 +897,7 @@ export class HudScene extends Phaser.Scene {
       saveSettings();
       this.refreshAutoAimToggle();
     });
-    const items: Phaser.GameObjects.Text[] = [this.resumeItem, this.soundToggle, this.musicToggle, this.controlsToggle, this.autoAimToggle, this.autoRefillToggle, this.motionToggle, this.achievementsItem];
+    const items: Phaser.GameObjects.Text[] = [this.resumeItem, this.soundToggle, this.musicToggle, this.controlsToggle, this.autoAimToggle, this.autoRefillToggle, this.motionToggle, this.textToggle, this.achievementsItem];
     // SAVE & QUIT keeps the shift for CONTINUE SHIFT on the title screen; plain QUIT throws it away, so it takes a second tap
     this.saveQuitItem = item('SAVE & QUIT', () => {
       const game = this.scene.get('Game') as GameScene;
@@ -918,6 +927,11 @@ export class HudScene extends Phaser.Scene {
     this.refreshAutoAimToggle();
     this.refreshAutoRefillToggle();
     this.refreshMotionToggle();
+    this.refreshTextToggle();
+  }
+
+  private refreshTextToggle(): void {
+    this.textToggle.setText(`LARGE TEXT: ${settings.largeText ? 'ON' : 'OFF'}`).setColor(settings.largeText ? COLORS.uiAccent : '#ffb3b3');
   }
 
   private refreshMotionToggle(): void {
@@ -934,7 +948,7 @@ export class HudScene extends Phaser.Scene {
     this.pauseTitle.setPosition(width / 2, height * 0.13);
     this.pauseTip.setPosition(width / 2, height * 0.13 + 52);
     this.pauseVersion.setPosition(width / 2, height - this.safe.bottom - 10);
-    const items = [this.resumeItem, this.soundToggle, this.controlsToggle, this.autoAimToggle, this.autoRefillToggle, this.motionToggle, this.achievementsItem, this.saveQuitItem].filter((t) => t.visible);
+    const items = [this.resumeItem, this.soundToggle, this.controlsToggle, this.autoAimToggle, this.autoRefillToggle, this.motionToggle, this.textToggle, this.achievementsItem, this.saveQuitItem].filter((t) => t.visible);
     const top = height * 0.28;
     const gap = Math.min(56, (height * 0.64) / items.length);
     items.forEach((t, i) => t.setPosition(width / 2, top + i * gap));

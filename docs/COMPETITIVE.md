@@ -22,7 +22,7 @@ measured top-six ranking.
 | 6 | Cloud saves | VS: Game Center cloud save | Saves stay on one device | **Gap** |
 | 7 | Portrait and landscape | VS plays in both | Landscape; portrait rotates the canvas | Partial |
 | 8 | Social | Leaderboards, achievements | Game Center (34 achievements, 3 boards; upload pending), web leaderboard, Today's Shift | Matches once uploaded |
-| 9 | Accessibility | Options menus | Separate sound and music, no-shake, auto-refill, haptics. No colourblind or text-size options | Partial |
+| 9 | Accessibility | Options menus | Separate sound and music, no-shake, auto-refill, haptics, LARGE TEXT; attack wind-ups show a "!" as well as a red flash. No full colourblind palette | Matches |
 | 10 | Languages | VS: many | English only | **Gap** (needs Noah: which languages) |
 | 11 | Personality | Each has a strong theme | A clinic of Noah's coworkers, germs, bosses with jokes; unique in the genre | **Leads** |
 | 12 | Content depth | VS: hundreds of weapons and characters | 12 providers, staff, tools, 4 bosses, Flu Season, daily shift | Behind (content, not code) |
@@ -33,7 +33,7 @@ measured top-six ranking.
    "game controller" Info.plist keys.
 2. iPad (row 5): done.
 3. Cloud saves (row 6): sync the save through iCloud key-value storage in the app.
-4. Accessibility (row 9): a larger-text option and germ shapes that don't rely on colour.
+4. ~~Accessibility (row 9): a larger-text option and germ shapes that don't rely on colour.~~ Done 2026-11-03.
 5. Languages (row 10) and content (row 12): Noah's call.
 
 Per AGENTS.md, a Gemini comparison in Antigravity should review this before big gameplay changes.

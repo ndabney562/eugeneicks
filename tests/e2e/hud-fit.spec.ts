@@ -8,8 +8,9 @@ const SCREENS = [
   { name: 'iPad mini', width: 1133, height: 744, aspect: 1133 / 744 },
 ];
 
-for (const screen of SCREENS) {
-  test(`the HUD fits the ${screen.name}: every control on screen, none on top of another`, async ({ page }) => {
+for (const screen of SCREENS) for (const largeText of [false, true]) {
+  test(`the HUD fits the ${screen.name}${largeText ? ' with LARGE TEXT' : ''}: every control on screen, none on top of another`, async ({ page }) => {
+    if (largeText) await page.addInitScript(() => localStorage.setItem('eugeneicks.settings.v1', '{"largeText":true}'));
     await page.setViewportSize({ width: screen.width, height: screen.height });
     await start(page);
     await page.waitForTimeout(300);

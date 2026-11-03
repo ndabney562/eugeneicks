@@ -25,6 +25,14 @@
   tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
+- 2026-11-03, branch `feat/accessibility`: LARGE TEXT switch in the pause menu (`settings.largeText`,
+  `DISPLAY.largeTextScale` 1.3, helper `src/ui/textScale.ts`: wrap a label in `scalable()` and it follows the
+  switch live). Scaled: HUD small labels, pause tip, toasts, trap signs, scribe markers, elite tags, boss hints. Not
+  scaled on purpose: the bottle readout (it ran into REFILL and SPRAY; the canister level shows the same), menus and
+  ChoicePanel cards (already 17 px or more, fixed-height cards). Germs winding up a sneeze or charge show a bobbing
+  "!" (`Germ.preUpdate`). Tests: `tests/e2e/accessibility.spec.ts`, LARGE TEXT variants in `hud-fit.spec.ts`,
+  `tests/unit/text-scale.test.ts`. Web only; the iOS Settings screen has no LARGE TEXT switch yet.
+- 2026-11-03: iOS CI rerun 41680963554 on main was again not acquired (7th run, GitHub macOS arm64 capacity).
 - 2026-11-03: PR #7 merged (title tabs no longer overlap on narrow phones). It fixes the Pages deploy, which had
   failed since #5 on the menu-design e2e test, so the live site was stuck on the build from before #3.
 - 2026-11-03: iCloud saves (PR #6) passed Noah's iPhone test: he deleted the app, Claude reinstalled it, and his
@@ -44,8 +52,9 @@
 
 ## Next step (exact)
 1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
-1a. [Assigned: Claude Code] Rerun iOS CI on main (see In progress) until a runner picks it up.
-2. [Assigned: Claude Code] Accessibility (row 9: larger-text option, germ tells that don't rely on colour).
+1a. [Assigned: Claude Code] Rerun iOS CI on main (`gh run rerun 41680963554`) until a runner picks it up.
+2. [Assigned: Noah] Try LARGE TEXT (pause menu) and the "!" on a Sneezer on the iPhone. Optional follow-up: a LARGE
+   TEXT switch in the app's native Settings screen (needs `ios/` changes, so iOS CI).
 3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
    `eugeneicks`), make an App Manager API key, paste the Issuer ID. Claude then runs
    `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-game-center/scripts/upload.py <AuthKey.p8> <issuer>`
@@ -59,6 +68,8 @@
 - GitHub's macOS runners are short on capacity: iOS CI run 41485107835 was never picked up (no code failure).
 
 ## Last test result
+- 2026-11-03, Noah's Mac, `feat/accessibility`: test:all (typecheck, unit 223/223, build, bundle, regression 178
+  passed across Chromium + WebKit), smoke 207/0. No `ios/` changes.
 - 2026-11-03, Noah's Mac, PR #6 merged with main: test:all (typecheck, unit 221/221, build, bundle, regression
   Chromium 83 + WebKit 83 passed), smoke 207/0, `swift test` 38/38, `xcodebuild test` 5 passed, 1 skipped.
 - 2026-11-02, Noah's Mac, PR #4 (tabs): typecheck, unit 206/206, build, bundle, regression 162 passed, smoke

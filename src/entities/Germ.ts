@@ -4,6 +4,7 @@ import { damp } from '../core/math';
 import { runRng } from '../core/rng';
 import { ELITE_AFFIXES, type EliteAffix } from '../data/powerups';
 import type { GermDef } from '../data/germs';
+import { scalable } from '../ui/textScale';
 
 /** Per-round multipliers applied when a germ spawns. */
 export interface GermScaling { hpMult: number; speedMult: number; }
@@ -62,6 +63,8 @@ export class Germ extends Phaser.Physics.Arcade.Sprite {
   private ring?: Phaser.GameObjects.Image;
   /** Elite trait label (so traits don't rely on color alone). */
   private tag?: Phaser.GameObjects.Text;
+  /** "!" over a germ about to sneeze or charge, so the warning doesn't rely on the red flash alone. */
+  private alert?: Phaser.GameObjects.Text;
   private sizeMul = 1;
   /** Full Moon: looks bigger or smaller than it is (the hitbox stays the same). */
   private moonSize = 1;
@@ -91,6 +94,7 @@ export class Germ extends Phaser.Physics.Arcade.Sprite {
     this.moonSize = 1;
     this.ring?.setVisible(false);
     this.tag?.setVisible(false);
+    this.alert?.setVisible(false);
     this.slowUntil = 0;
     this.burnDps = 0;
     this.burnUntil = 0;
@@ -127,11 +131,28 @@ export class Germ extends Phaser.Physics.Arcade.Sprite {
     if (!this.ring) this.ring = this.scene.add.image(this.x, this.y, 'elite-ring').setDepth(7.5);
     this.ring.setVisible(true).setTint(ELITE_AFFIXES[affix].ring).setScale(((this.def.radius * 1.25 + 18) * 2) / 64);
     if (!this.tag) {
-      this.tag = this.scene.add.text(0, 0, '', {
+      this.tag = scalable(this.scene.add.text(0, 0, '', {
         fontFamily: 'system-ui, sans-serif', fontSize: '12px', fontStyle: '900', color: '#ffffff', stroke: '#1b2b30', strokeThickness: 3,
-      }).setOrigin(0.5, 1).setDepth(19);
+      })).setOrigin(0.5, 1).setDepth(19);
     }
     this.tag.setText(`RESISTANT · ${ELITE_AFFIXES[affix].label}`).setVisible(true);
+  }
+
+  /** Runs every frame, whatever its brain is doing: keeps the wind-up "!" over a germ about to attack. */
+  preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
+    if (this.windupUntil <= time && this.chargeState !== 'windup') {
+      this.alert?.setVisible(false);
+      return;
+    }
+    if (!this.alert) {
+      this.alert = scalable(this.scene.add.text(0, 0, '!', {
+        fontFamily: 'system-ui, sans-serif', fontSize: '40px', fontStyle: '900', color: '#ffe66d', stroke: '#1b2b30', strokeThickness: 7,
+      })).setOrigin(0.5, 1).setDepth(19);
+    }
+    // Sits above the elite tag when there is one, and bobs so it catches the eye
+    const above = this.def.radius * this.sizeMul * this.moonSize + (this.tag?.visible ? 34 : 8);
+    this.alert.setVisible(true).setPosition(this.x, this.y - above - Math.abs(Math.sin(time / 90)) * 6);
   }
 
   /** PRIOR AUTHORIZATION: frozen in place (pending approval) for `ms`. */
@@ -272,5 +293,6 @@ export class Germ extends Phaser.Physics.Arcade.Sprite {
     this.disableBody(true, true);
     this.ring?.setVisible(false);
     this.tag?.setVisible(false);
+    this.alert?.setVisible(false);
   }
 }

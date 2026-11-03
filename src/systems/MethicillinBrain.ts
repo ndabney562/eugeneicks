@@ -7,6 +7,7 @@ import type { Germ } from '../entities/Germ';
 import type { BossBrain } from './BossBrain';
 import type { BossHost } from './DiamondBrain';
 import { SpeechBubble } from '../ui/SpeechBubble';
+import { scalable } from '../ui/textScale';
 
 type Mode = 'chase' | 'shotWindup' | 'rollWindup' | 'rolling';
 
@@ -47,10 +48,10 @@ export class MethicillinBrain implements BossBrain {
     const now = host.scene.time.now;
     this.bubble = new SpeechBubble(host.scene);
     this.fx = host.scene.add.graphics().setDepth(11);
-    this.label = host.scene.add.text(0, 0, '', {
+    this.label = scalable(host.scene.add.text(0, 0, '', {
       fontFamily: 'system-ui, sans-serif', fontSize: '14px', fontStyle: '900', color: '#ffd166',
       stroke: '#3a2a00', strokeThickness: 4,
-    }).setOrigin(0.5, 0).setDepth(31).setVisible(false);
+    })).setOrigin(0.5, 0).setDepth(31).setVisible(false);
     this.nextShotAt = now + this.cfg.firstShotMs;
     this.nextRollAt = now + Phaser.Math.Between(...this.cfg.rollEveryMs);
     this.nextChatterAt = now + 3000;

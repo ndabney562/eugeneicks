@@ -19,6 +19,8 @@ export interface Settings {
   autoRefill: boolean;
   /** No screen shake (pause menu). */
   reducedMotion: boolean;
+  /** Small labels (HUD, signs, germ tags) drawn bigger (pause menu). */
+  largeText: boolean;
   /** One-time gameplay hints already learned (move, spray, pour, purge, buy). */
   learned: Record<string, boolean>;
   /** Who you play (title screen): eugene, kaya or lucien. */
@@ -30,14 +32,14 @@ export interface Settings {
 }
 
 const KEY = 'eugeneicks.settings.v1';
-const DEFAULTS: Settings = { autoAim: true, twinStick: false, sound: true, music: true, autoRefill: true, reducedMotion: false, learned: {}, character: 'eugene', difficulty: 'urgent', mode: 'standard' };
+const DEFAULTS: Settings = { autoAim: true, twinStick: false, sound: true, music: true, autoRefill: true, reducedMotion: false, largeText: false, learned: {}, character: 'eugene', difficulty: 'urgent', mode: 'standard' };
 
 /** Only supported values cross the persistence boundary. Valid existing saves keep their keys. */
 export function parseSettings(value: unknown): Settings {
   const fresh = { ...DEFAULTS, learned: {} };
   if (!value || typeof value !== 'object' || Array.isArray(value)) return fresh;
   const raw = value as Record<string, unknown>;
-  for (const key of ['autoAim', 'twinStick', 'sound', 'music', 'autoRefill', 'reducedMotion'] as const) {
+  for (const key of ['autoAim', 'twinStick', 'sound', 'music', 'autoRefill', 'reducedMotion', 'largeText'] as const) {
     if (typeof raw[key] === 'boolean') fresh[key] = raw[key];
   }
   if (typeof raw.character === 'string' && CHARACTERS.some((c) => c.id === raw.character)) fresh.character = raw.character;

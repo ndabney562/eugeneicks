@@ -27,6 +27,8 @@ export const DISPLAY = {
    * bigger than the header's other text the tabs are drawn, for easier tapping.
    */
   titleTabs: { drop: 14, widthShare: 0.82, scale: 1.25 },
+  /** LARGE TEXT (pause menu): small labels are drawn this much bigger. At 720 px tall a 14 px label is only ~8 pt on an iPhone. */
+  largeTextScale: 1.3,
   /**
    * World signs (room prices, station labels, door signs) fade while a HUD control, banner or toast covers them,
    * or while they run off the screen edge, so no two pieces of text are read on top of each other.
