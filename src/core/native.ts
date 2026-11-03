@@ -7,6 +7,7 @@ import { DIFFICULTIES, difficultyById } from '../data/difficulties';
 import { GERMS } from '../data/germs';
 import { modifierById } from '../data/modifiers';
 import { achievementList } from './achievements';
+import { applyCloud, localCloud, noteLocalChanges, parseCloud, type CloudSave } from './cloudSave';
 import { events, GameEvents, type HealthPayload } from './events';
 import { getLeaderboardApiUrl } from './leaderboard';
 import { applyVolume } from './music';
@@ -21,9 +22,10 @@ import { savedShift } from './shiftSave';
  * NATIVE HOST: the iPhone app (ios/) runs this same build inside a WKWebView, opened with `?native`. The game
  * shows its own title screen and menus there, exactly as in a browser. The app adds what the web can't: a
  * SwiftUI Settings sheet (the title's gear asks for it), Game Center (the LEADERBOARD tab asks for it) and
- * haptics. The game reports back through `webkit.messageHandlers.eugeneicks` (a snapshot of saved progress whenever
- * the title shows or progress changes, `ready`, `playing`, `exit`, haptics) and takes settings changes through
- * `window.eugeneicksNative`. In a browser none of this runs.
+ * haptics, and keeps the saves in iCloud. The game reports back through `webkit.messageHandlers.eugeneicks` (a
+ * snapshot of saved progress and a `cloudSave` copy whenever the title shows or progress changes, `ready`, `playing`,
+ * `exit`, haptics) and takes settings changes and other devices' saves through `window.eugeneicksNative`. In a
+ * browser none of this runs.
  */
 export const NATIVE = hasNativeHost();
 
@@ -65,8 +67,28 @@ export function snapshot(): NativeMessage {
   };
 }
 
+/**
+ * iCloud: the app numbers each copy of the cloud saves it sends (`gen`); every copy the game posts back carries the
+ * number of the last one merged in, so the app never uploads saves that haven't taken in what iCloud had.
+ */
+let cloudGen = 0;
+/** A copy from the app waiting for the title screen (merges never happen mid-shift or in another menu). */
+let pendingCloud: { copy: CloudSave; gen: number } | undefined;
+let gameRef: Phaser.Game | undefined;
+
 function sendSnapshot(): void {
   post(snapshot());
+  noteLocalChanges();
+  post({ type: 'cloudSave', gen: cloudGen, save: localCloud() });
+}
+
+/** Merges the waiting copy, if any. True if the saves changed. */
+function takePendingCloud(): boolean {
+  if (!pendingCloud) return false;
+  const { copy, gen } = pendingCloud;
+  pendingCloud = undefined;
+  cloudGen = Math.max(cloudGen, gen);
+  return applyCloud(copy);
 }
 
 /** Leaving a shift, the board or the locker: back to the title screen (the app hears `exit` too). */
@@ -150,6 +172,20 @@ const api = {
   refresh(): void {
     sendSnapshot();
   },
+  /**
+   * The saves in iCloud (another device's, merged with this one's last upload), numbered `gen`. On the title screen
+   * they're merged now (the title redraws if anything changed); anywhere else, on the next title screen. A copy this
+   * build can't read (a newer app's) is ignored, and this device stops uploading until it can.
+   */
+  applyCloud(value: unknown, gen: number): void {
+    const copy = parseCloud(value);
+    if (!copy || typeof gen !== 'number' || gen < cloudGen) return;
+    pendingCloud = { copy, gen };
+    const title = gameRef?.scene.getScene('Title');
+    if (!title || !gameRef?.scene.isActive('Title')) return;
+    if (takePendingCloud()) title.scene.restart();
+    else sendSnapshot();
+  },
 };
 
 /**
@@ -159,10 +195,14 @@ const api = {
 export function installNativeBridge(game: Phaser.Game): void {
   if (!NATIVE) return;
   (window as unknown as { eugeneicksNative: typeof api }).eugeneicksNative = api;
+  gameRef = game;
   watchForHaptics();
   // The scenes exist once the game is ready; the title screen is created after Boot and after every exit
   game.events.once(Phaser.Core.Events.READY, () => {
-    game.scene.getScene('Title')?.events.on(Phaser.Scenes.Events.CREATE, () => {
+    const title = game.scene.getScene('Title');
+    // Before the title draws, so it shows the merged saves
+    title?.events.on(Phaser.Scenes.Events.START, takePendingCloud);
+    title?.events.on(Phaser.Scenes.Events.CREATE, () => {
       sendSnapshot();
       post({ type: 'ready' });
     });

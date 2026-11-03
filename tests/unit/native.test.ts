@@ -52,7 +52,9 @@ it('validates settings patches and emits a snapshot matching Swift field names',
   (window as any).eugeneicksNative.setSettings({ difficulty: 'walkIn', sound: 'loud', character: 'kaya', unknown: true });
   const saved = JSON.parse(localStorage.getItem('eugeneicks.settings.v1')!);
   expect(saved).toMatchObject({ difficulty: 'walkIn', sound: true, character: 'eugene' });
-  const message = postMessage.mock.calls.at(-1)![0];
+  // A snapshot, then the copy of the saves for iCloud
+  expect(postMessage.mock.calls.at(-1)![0]).toMatchObject({ type: 'cloudSave', gen: 0, save: { v: 1 } });
+  const message = postMessage.mock.calls.at(-2)![0];
   expect(message).toMatchObject({ type: 'snapshot', version: 'baseline-test', settings: { difficulty: 'walkIn' }, totals: { runs: 0, totalKills: 0 }, progress: { credits: 0, nps: 0, bank: 0 } });
   expect(message.pals.map((p: any) => p.id)).toEqual(['eugene', 'kaya', 'lucien', 'ken', 'jason', 'dhiwya', 'raj', 'lidiya', 'dharma', 'amanda', 'janeen', 'jin']);
   expect(message.difficulties.map((d: any) => d.id)).toEqual(['walkIn', 'urgent', 'trauma']);
@@ -61,7 +63,7 @@ it('validates settings patches and emits a snapshot matching Swift field names',
   expect((window as any).eugeneicksNative.open).toBeUndefined();
 });
 
-it('reports in with a snapshot and ready every time the title screen is created', async () => {
+it('reports in with a snapshot, a copy for iCloud and ready every time the title screen is created', async () => {
   const postMessage = host();
   const native = await import('../../src/core/native');
   const game = fakeGame();
@@ -70,9 +72,9 @@ it('reports in with a snapshot and ready every time the title screen is created'
   game.fire('game:ready');
   expect(postMessage).not.toHaveBeenCalled();
   game.fire('title:create');
-  expect(postMessage.mock.calls.map((c) => c[0].type)).toEqual(['snapshot', 'ready']);
+  expect(postMessage.mock.calls.map((c) => c[0].type)).toEqual(['snapshot', 'cloudSave', 'ready']);
   game.fire('title:create');
-  expect(postMessage.mock.calls.map((c) => c[0].type)).toEqual(['snapshot', 'ready', 'snapshot', 'ready']);
+  expect(postMessage.mock.calls.map((c) => c[0].type)).toEqual(['snapshot', 'cloudSave', 'ready', 'snapshot', 'cloudSave', 'ready']);
 });
 
 it('goes back to the web title on exit and asks the app for its settings sheet and Game Center', async () => {
