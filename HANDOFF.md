@@ -6,6 +6,7 @@
   public-facing. Standing order "always merge": merge green PRs without asking.
 
 ## Done
+- 2026-11-03: App Store Connect record created (Noah); Claude uploaded Game Center (34 achievements, 3 leaderboards).
 - 2026-11-02: the game moved to a fresh public repo, `ndabney562/eugeneicks`, with one starting commit. Noah wanted
   the game's former name and Eugene's real surname gone everywhere (locally and online). Eugene has no surname in
   the game now (chart and germs say EUGENE), the clinic is EugeneLand Urgent Care, the bundle ID is
@@ -59,10 +60,12 @@
 1a. [Assigned: Claude Code] Rerun iOS CI on main (`gh run rerun 41680963554`) until a runner picks it up.
 2. [Assigned: Noah] Try the slower feet and the "!" on a Sneezer on the iPhone. Optional follow-up: a LARGE
    TEXT switch in the app's native Settings screen (needs `ios/` changes, so iOS CI).
-3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
-   `eugeneicks`), make an App Manager API key, paste the Issuer ID. Claude then runs
-   `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-game-center/scripts/upload.py <AuthKey.p8> <issuer>`
-   (dry run, then `--go`).
+3. [Done 2026-11-03] App Store Connect record EUGENEICKS (app ID 6830328638, SKU `eugeneicks`). Game Center on, 34
+   achievements and 3 leaderboards uploaded (re-run dry run: 34 exist, 0 to create). API key: App Manager,
+   `~/Downloads/AuthKey_8N39839RBM.p8` (mode 600), issuer ID in Noah's chat; reuse it for TestFlight uploads. The
+   script needs `pyjwt cryptography requests` (use a venv).
+3a. [Assigned: Claude Code] First TestFlight build (docs/APP-STORE.md steps 3-5); Game Center only shows up in
+   TestFlight/App Store builds.
 4. [Assigned: Noah] With a Bluetooth controller paired to the iPhone, check it moves Eugene in the app. If yes,
    Claude adds the `GCSupportedGameControllers` Info.plist keys. If no, Claude bridges GameController.framework.
 5. [Assigned: Noah] Delete the old app from the iPhone (its bundle ID changed, so the new build installs alongside).
