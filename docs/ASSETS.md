@@ -5,7 +5,7 @@
 | Eugene sprite | Placeholder drawn in code, matched to Noah's title poster (messy brown-grey hair, blue surgical mask, stethoscope, navy scrubs) |
 | Pals: Dr. Derick, PA Julian (v0.16), Theo (v0.18) | Drawn in code (`BootScene`), loosely after Noah's reference photos; the photos are not in the repo. Plain clothing, no logos |
 | Crystal | Germ monster drawn in code; v0.18 look (striped knit headwrap, beaded dreadlocks, hoops, bead necklaces) from Noah's reference picture, which is not in the repo |
-| PA Jin | Portrait: Noah's picture (2026-11-01), in the portrait sheet's 12th cell. In-game sprite drawn in code (`providerArt.ts`): long dark waves, purple scrubs, stethoscope, silver hoop |
+| Jaykwellen | Portrait: Noah's picture (2026-11-01), in the portrait sheet's 12th cell. In-game sprite drawn in code (`providerArt.ts`): long dark waves, purple scrubs, stethoscope, silver hoop |
 | Scribes Karim and Nate | Drawn in code (`BootScene`, `scribe-omar`, `scribe-alan`) from Noah's reference photos, which are not in the repo. No logos or printed text |
 | Floor tile, furniture | Placeholder, drawn in code |
 | Title screen art | Noah's EUGENEICKS poster (`public/assets/title.jpg`, 1600×900), redrawn flat-cartoon to match the game art (2026-11-01); `public/social-card.jpg` is its 1200×630 centre crop |
@@ -52,5 +52,5 @@ Noah renamed everyone but Eugene. Only the shown names changed: ids, saves, art 
 | `dharma` | John | | | |
 | `amanda` | Karen | | | |
 | `janeen` | Gloria | | | |
-| `jin` | PA Jin (new, 2026-11-01) | | | |
+| `jin` | Jaykwellen (was Jaykwellen, renamed 2026-11-03) | | | |
 

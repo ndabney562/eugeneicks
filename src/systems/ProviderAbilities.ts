@@ -24,7 +24,7 @@ export interface AbilityHost {
   joint(time: number, damage: number): void;
   refill(fraction: number): void;
   recharge(ms: number): void;
-  /** PA Jin's girls unlocked on this device (0 when absent). */
+  /** Jaykwellen's girls unlocked on this device (0 when absent). */
   girls?(): number;
   /** The women on shift (Lena, Maria, Tatiana) work `speed` × as fast for `ms`. */
   women?(time: number, ms: number, speed: number): void;
@@ -62,7 +62,7 @@ export class ProviderAbilities {
     return this.soloPower() * this.girlPower(time) * (this.host.id === 'dharma' && medication ? 1.4 : 1)
       * (this.boostKind === 'power' && time < this.boostUntil ? 1.35 : 1);
   }
-  /** PA Jin: +perGirl always, and more during GIRLS' NIGHT. */
+  /** Jaykwellen: +perGirl always, and more during GIRLS' NIGHT. */
   private girlPower(time: number): number {
     if (this.host.id !== 'jin') return 1;
     const n = this.host.girls?.() ?? 0;

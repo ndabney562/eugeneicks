@@ -2,6 +2,9 @@
 
 ## Unreleased: EUGENEICKS
 
+- **PA Jin is now Jaykwellen.** Same provider, same abilities and unlocks; only the name changes (roster, health bar,
+  chart, call-outs).
+- **Calmer feet.** Characters take half as many steps for the same distance.
 - **Large text.** A new LARGE TEXT switch in the pause menu draws the small labels 30% bigger: score, copays, room
   and shift tags, tool name, power-up timers, tips, achievement toasts, trap signs, scribe markers, elite tags and
   boss hints. It applies at once and is remembered.

@@ -22,7 +22,7 @@ it('counts only the women Noah named, providers and staff alike', async () => {
   expect(p.girlsUnlocked()).toBe(4);
 });
 
-it('makes every Locker damage level count three times for Jin', async () => {
+it('makes every Locker damage level count three times for Jaykwellen', async () => {
   localStorage.setItem('eugeneicks.progress.v1', JSON.stringify({ locker: { squirtBottle: 3, lysolFogger: 2, uvWand: 1 } }));
   const p = await import('../../src/core/progress');
   expect(p.jinLockerBoost('bleachSoaker')).toBe(1);
@@ -64,7 +64,7 @@ it('starts weaker than everyone but Karen, has the best scribe affinity, and ful
   for (const c of CHARACTERS.filter((c) => c.id !== 'jin' && c.id !== 'amanda')) expect(c.passive.toolDamage ?? 1).toBeGreaterThan(jin.passive.toolDamage!);
   for (const c of CHARACTERS.filter((c) => c.id !== 'jin')) expect(jin.helperDamage).toBeGreaterThan(c.helperDamage);
   expect(callOutChance('jin')).toBeLessThan(Math.min(...CHARACTERS.filter((c) => c.id !== 'jin').map((c) => callOutChance(c.id))));
-  // Same maxed tool for everyone (its own ×1.21 cancels); Jin adds her 3× Locker, all 7 girls and Girls' Night
+  // Same maxed tool for everyone (its own ×1.21 cancels); Jaykwellen adds her 3× Locker, all 7 girls and Girls' Night
   const jinMax = jin.passive.toolDamage! * (1 + 0.04 * 7) * (1 + 0.08 * 7) * (1.3 * 1.3) / (1.1 * 1.1);
   const peaks: Record<string, number> = { lidiya: 3.2, dharma: 1.4, dhiwya: 1.35 };
   for (const c of CHARACTERS.filter((c) => !['jin', 'janeen', 'lidiya'].includes(c.id))) expect(jinMax).toBeGreaterThan((c.passive.toolDamage ?? 1) * (peaks[c.id] ?? 1));

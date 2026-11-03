@@ -122,7 +122,7 @@ Values live in `src/config/balance.ts` and `src/config/controls.ts`.
 
 | Doctor | Call-out Chance | Notes |
 |---|---|---|
-| PA Jin | 1% | Former scribe; her staff never want to miss her |
+| Jaykwellen | 1% | Former scribe; her staff never want to miss her |
 | Gloria, Priya | 3% | Universal favorites / beloved mentors |
 | Julian, Derulo | 6% | Respectful mentors & athletes |
 | Theo | 10% | Understandable grievance culture |

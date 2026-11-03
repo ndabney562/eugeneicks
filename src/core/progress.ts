@@ -175,13 +175,13 @@ export function lockerLevel(toolId: string): number {
   return state.locker[toolId] ?? 0;
 }
 
-/** PA Jin's girls: the women unlocked on this device (hired providers and bought staff), 0 to 7. */
+/** Jaykwellen's girls: the women unlocked on this device (hired providers and bought staff), 0 to 7. */
 export function girlsUnlocked(): number {
   const { providers, staff } = BALANCE.jin.girls;
   return providers.filter((id) => doctorUnlocked(id)).length + staff.filter((id) => scribeUnlocked(id as ScribeId)).length;
 }
 
-/** PA Jin: an extra × on top of a tool's own Locker damage, so each of its damage levels counts `lockerScale` times. */
+/** Jaykwellen: an extra × on top of a tool's own Locker damage, so each of its damage levels counts `lockerScale` times. */
 export function jinLockerBoost(toolId: string): number {
   return LOCKER.levels.slice(0, lockerLevel(toolId))
     .reduce((m, l) => (l.damage ? m * (1 + (l.damage - 1) * BALANCE.jin.lockerScale) / l.damage : m), 1);

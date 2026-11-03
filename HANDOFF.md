@@ -25,6 +25,10 @@
   tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
+- 2026-11-03, PR #14: PA Jin renamed Jaykwellen (Noah's call; id stays `jin` so saves and unlocks keep working;
+  short/chart/surname JAYKWELLEN, fits the roster card and health bar). Feet step half as often
+  (`DISPLAY.walk.stride` 46 → 92, Noah: "too fast, make 50% the speed").
+- 2026-11-03: Noah on LARGE TEXT: "Text looks too." (message cut off; asked whether too big or too small).
 - 2026-11-03, PR #12 merged (5c63ee8): LARGE TEXT switch in the pause menu (`settings.largeText`,
   `DISPLAY.largeTextScale` 1.3, helper `src/ui/textScale.ts`: wrap a label in `scalable()` and it follows the
   switch live). Scaled: HUD small labels, pause tip, toasts, trap signs, scribe markers, elite tags, boss hints. Not
@@ -68,6 +72,7 @@
 - GitHub's macOS runners are short on capacity: iOS CI run 41485107835 was never picked up (no code failure).
 
 ## Last test result
+- 2026-11-03, Noah's Mac, `feat/jaykwellen-slower-feet`: test:all (unit 223/223, regression 178), smoke 207/0.
 - 2026-11-03, Noah's Mac, `feat/accessibility`: test:all (typecheck, unit 223/223, build, bundle, regression 178
   passed across Chromium + WebKit), smoke 207/0. No `ios/` changes.
 - 2026-11-03, Noah's Mac, PR #6 merged with main: test:all (typecheck, unit 221/221, build, bundle, regression
