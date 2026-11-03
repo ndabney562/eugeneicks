@@ -33,9 +33,8 @@
   Noah chose "merge now, then fix CI".
 - iOS CI has never run in this repo. PR #10 tried `macos-15` and was closed: it wasn't acquired either, and GitHub's
   annotation says macOS arm64 runners are short on capacity. Keep `macos-26`; rerun the iOS job later
-  (`gh run list --workflow ios.yml`, then `gh run rerun <id>`) and check it passes on main's ee01a00. Its iOS CI job
-  (`build-and-test`) timed out at 15 min on the slow runner; local `swift test` 38/38 and `xcodebuild test` passed.
-  Original design notes: Draft merge module at
+  (`gh run list --workflow ios.yml`, then `gh run rerun <id>`) and check it passes on main's ee01a00.
+- iCloud saves design notes (built in #6): draft merge module at
   `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
   totals take the max, achievements and purchases union, spendable balances from the device that played last). Plan:
   game posts `{type:'cloudSave', gen, blob}` with each snapshot; app keeps it in `NSUbiquitousKeyValueStore`
