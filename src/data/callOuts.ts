@@ -71,9 +71,9 @@ export const CALL_OUT_REASONS: Record<string, string[]> = {
     'Called out. Too starstruck to come in.',
   ],
   jin: [
-    'Called out. Somehow. Jin is still texting them updates.',
-    'Out sick. Jin already charted the reason.',
-    'Called out. Jin covered their notes before they asked.',
+    'Called out. Somehow. Jaykwellen is still texting them updates.',
+    'Out sick. Jaykwellen already charted the reason.',
+    'Called out. Jaykwellen covered their notes before they asked.',
     'Called out. Will be back in time for Girls\' Night.',
   ],
 };

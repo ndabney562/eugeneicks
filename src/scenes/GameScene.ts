@@ -161,7 +161,7 @@ export class GameScene extends Phaser.Scene {
   character: CharacterDef = characterById('eugene');
   /** PA Julian's CLEAN FIELD, while it's down. */
   abilities!: ProviderAbilities;
-  /** PA Jin's girls, counted once per shift (unlocks happen between shifts). */
+  /** Jaykwellen's girls, counted once per shift (unlocks happen between shifts). */
   private girls = 0;
   private abilityGround!: Phaser.GameObjects.Graphics;
   private secondReadyAt = 0;
@@ -1119,7 +1119,7 @@ export class GameScene extends Phaser.Scene {
     events.emit(GameEvents.CopaysChanged, { copays: this.copays });
   }
 
-  /** PA Jin's Locker damage levels count 3×; everyone else gets 1. */
+  /** Jaykwellen's Locker damage levels count 3×; everyone else gets 1. */
   private jinLocker(toolId: string): number {
     return this.character.id === 'jin' ? jinLockerBoost(toolId) : 1;
   }

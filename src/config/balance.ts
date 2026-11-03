@@ -509,7 +509,7 @@ export const BALANCE = {
   },
   /** What a hired Pal has over Eugene (on top of their signature move). toolDamage = damage × with every tool. */
   /**
-   * PA JIN (Noah, 2026-11-01): a former scribe who's strongest with her girls. `girls` are the women who count once
+   * JAYKWELLEN (Noah, 2026-11-01): a former scribe who's strongest with her girls. `girls` are the women who count once
    * unlocked (hired providers, bought staff). She starts weak (`toolDamage`), gains `perGirl` damage for each, and
    * every Locker damage level counts `lockerScale` times for her (+10% becomes +30%).
    */

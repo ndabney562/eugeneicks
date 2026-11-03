@@ -46,8 +46,8 @@ export const DISPLAY = {
    * 96 px doctors; smaller characters scale everything down. Visual only (aim, hitboxes and turning don't change).
    */
   walk: {
-    /** Px of travel for one full stride (left step + right step). */
-    stride: 46,
+    /** Px of travel for one full stride (left step + right step). 92 = half the step rate of the first 46 (Noah, 2026-11-03). */
+    stride: 92,
     /** How far a foot reaches ahead of (or behind) the hips, px: far enough for the toes to peek out past the coat. */
     reach: 28,
     /** The doctors' hips sit this far behind the sprite's centre (their coats are drawn back from it, their heads forward), px. */

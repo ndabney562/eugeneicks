@@ -72,8 +72,8 @@ export const CHARACTERS: CharacterDef[] = [
   { id: 'amanda', name: 'Karen', short: 'KAREN', chart: 'KAREN', surname: 'KAREN', signature: 'rainCheck', button: 'RAIN\nCHECK', helperDamage: 0.5, blurb: 'RAIN CHECK: gloomy cloud; 1% movement and damage', passive: { toolDamage: 0.01, moveSpeed: 0.01, maxHp: 0 }, price: 25, second: { name: 'NOT MY PROBLEM', button: 'NOT MY\nPROBLEM', price: 25, cooldownMs: 22000 } },
   { id: 'janeen', name: 'Gloria', short: 'GLORIA', chart: 'GLORIA', surname: 'GLORIA', signature: 'divineCoverage', button: 'DIVINE\nCOVERAGE', helperDamage: 2, blurb: 'DIVINE COVERAGE: apex cleanse, healing and helper rally', passive: { toolDamage: 4, moveSpeed: 1.4, maxHp: 250 }, price: 10000, second: { name: 'ALL SPECIALTIES', button: 'ALL\nSPECIALTIES', price: 1500, cooldownMs: 30000 } },
   {
-    // PA Jin (Noah, 2026-11-01): a former scribe; her girls' bonus and her 3× Locker gains live in ProviderAbilities and GameScene
-    id: 'jin', name: 'PA Jin', short: 'JIN', chart: 'JIN', surname: 'JIN', signature: 'groupChat', button: 'GROUP\nCHAT',
+    // Jaykwellen (Noah, 2026-11-01): a former scribe; her girls' bonus and her 3× Locker gains live in ProviderAbilities and GameScene
+    id: 'jin', name: 'Jaykwellen', short: 'JAYKWELLEN', chart: 'JAYKWELLEN', surname: 'JAYKWELLEN', signature: 'groupChat', button: 'GROUP\nCHAT',
     helperDamage: BALANCE.jin.helperDamage,
     blurb: `GROUP CHAT: a burst for each of her girls · +${Math.round(BALANCE.jin.perGirl * 100)}% damage per girl · Locker upgrades count ${BALANCE.jin.lockerScale}×`,
     passive: { toolDamage: BALANCE.jin.toolDamage }, price: 220,

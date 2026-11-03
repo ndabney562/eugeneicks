@@ -382,7 +382,7 @@ export class Scribes {
   }
 
   /** Recall clears interruption and gathers helpers; permanent upgrade values are never mutated. */
-  /** `only`: rally just these helpers (PA Jin's GIRLS' NIGHT rallies the women). */
+  /** `only`: rally just these helpers (Jaykwellen's GIRLS' NIGHT rallies the women). */
   rally(time: number, ms: number, power: number, speed: number, recall: boolean, only?: readonly ScribeId[]): void {
     for (const s of this.list.filter(s => s.here && (!only || only.includes(s.def.id)))) {
       s.rallyUntil = time + ms; s.rallyPower = power; s.rallySpeed = speed;
