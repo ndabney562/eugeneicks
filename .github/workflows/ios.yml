@@ -27,7 +27,8 @@ concurrency:
 
 jobs:
   build-and-test:
-    runs-on: macos-26
+    # macos-26 runners were never assigned to this repo (3 of 3 runs, Nov 2 to 3, 2026), so use macos-15
+    runs-on: macos-15
     timeout-minutes: 45
     permissions:
       contents: write
