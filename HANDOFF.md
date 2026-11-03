@@ -27,7 +27,8 @@
 ## In progress
 - 2026-11-03: PR #7 merged (title tabs no longer overlap on narrow phones). It fixes the Pages deploy, which had
   failed since #5 on the menu-design e2e test, so the live site was stuck on the build from before #3.
-- iCloud saves: built in PR #6 (`feat/icloud-saves`), waiting on Noah's real-device test. Its iOS CI job
+- 2026-11-03: iCloud saves (PR #6) passed Noah's iPhone test: he deleted the app, Claude reinstalled it, and his
+  record and coins came back from iCloud. Not tried on the iPad (none was plugged in). Its iOS CI job
   (`build-and-test`) timed out at 15 min on the slow runner; local `swift test` 38/38 and `xcodebuild test` passed.
   Original design notes: Draft merge module at
   `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
@@ -39,9 +40,7 @@
 
 ## Next step (exact)
 1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
-2. [Assigned: Noah] Install PR #6's build on the iPhone and iPad (same Apple ID), play on one, open the other, check
-   records carry over. Then Claude merges #6.
-2a. [Assigned: Claude Code] Accessibility (row 9: larger-text option, germ tells that don't rely on colour).
+2. [Assigned: Claude Code] Accessibility (row 9: larger-text option, germ tells that don't rely on colour).
 3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
    `eugeneicks`), make an App Manager API key, paste the Issuer ID. Claude then runs
    `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-game-center/scripts/upload.py <AuthKey.p8> <issuer>`
@@ -55,6 +54,8 @@
 - GitHub's macOS runners are short on capacity: iOS CI run 41485107835 was never picked up (no code failure).
 
 ## Last test result
+- 2026-11-03, Noah's Mac, PR #6 merged with main: test:all (typecheck, unit 221/221, build, bundle, regression
+  Chromium 83 + WebKit 83 passed), smoke 207/0, `swift test` 38/38, `xcodebuild test` 5 passed, 1 skipped.
 - 2026-11-02, Noah's Mac, PR #4 (tabs): typecheck, unit 206/206, build, bundle, regression 162 passed, smoke
   207/0; PR #3 (feet): unit 213/213, regression 164, smoke 207/0. No `ios/` changes since the first commit.
 - 2026-11-02, Noah's Mac, before the first commit: typecheck OK; build OK; unit, smoke and Playwright regression all
