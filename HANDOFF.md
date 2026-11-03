@@ -25,7 +25,7 @@
   tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
-- 2026-11-03, branch `feat/accessibility`: LARGE TEXT switch in the pause menu (`settings.largeText`,
+- 2026-11-03, PR #12 merged (5c63ee8): LARGE TEXT switch in the pause menu (`settings.largeText`,
   `DISPLAY.largeTextScale` 1.3, helper `src/ui/textScale.ts`: wrap a label in `scalable()` and it follows the
   switch live). Scaled: HUD small labels, pause tip, toasts, trap signs, scribe markers, elite tags, boss hints. Not
   scaled on purpose: the bottle readout (it ran into REFILL and SPRAY; the canister level shows the same), menus and
@@ -78,7 +78,7 @@
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- ee01a00 (main, PR #6 iCloud saves merged 2026-11-03).
+- 5c63ee8 (main, PR #12 accessibility merged 2026-11-03).
 
 ## Model + timestamp
 - Claude Code (claude-opus-5-5), 2026-11-03 EST.
