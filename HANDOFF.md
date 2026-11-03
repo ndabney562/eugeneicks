@@ -31,8 +31,9 @@
   record and coins came back from iCloud. Not tried on the iPad (none was plugged in). Merged as ee01a00 on
   2026-11-03 with local checks only: the iOS CI job never got a `macos-26` runner (3 of 3 runs, zero steps), and
   Noah chose "merge now, then fix CI".
-- PR #10 (`ci/ios-macos-15`): iOS CI moved to `macos-15`. If its iOS job runs and passes, merge it. If it also never
-  starts, close it and rerun the `macos-26` job later (`gh run rerun <id>`). Its iOS CI job
+- iOS CI has never run in this repo. PR #10 tried `macos-15` and was closed: it wasn't acquired either, and GitHub's
+  annotation says macOS arm64 runners are short on capacity. Keep `macos-26`; rerun the iOS job later
+  (`gh run list --workflow ios.yml`, then `gh run rerun <id>`) and check it passes on main's ee01a00. Its iOS CI job
   (`build-and-test`) timed out at 15 min on the slow runner; local `swift test` 38/38 and `xcodebuild test` passed.
   Original design notes: Draft merge module at
   `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
@@ -44,6 +45,7 @@
 
 ## Next step (exact)
 1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
+1a. [Assigned: Claude Code] Rerun iOS CI on main (see In progress) until a runner picks it up.
 2. [Assigned: Claude Code] Accessibility (row 9: larger-text option, germ tells that don't rely on colour).
 3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
    `eugeneicks`), make an App Manager API key, paste the Issuer ID. Claude then runs
