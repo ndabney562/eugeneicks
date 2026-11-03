@@ -28,7 +28,11 @@
 - 2026-11-03: PR #7 merged (title tabs no longer overlap on narrow phones). It fixes the Pages deploy, which had
   failed since #5 on the menu-design e2e test, so the live site was stuck on the build from before #3.
 - 2026-11-03: iCloud saves (PR #6) passed Noah's iPhone test: he deleted the app, Claude reinstalled it, and his
-  record and coins came back from iCloud. Not tried on the iPad (none was plugged in). Its iOS CI job
+  record and coins came back from iCloud. Not tried on the iPad (none was plugged in). Merged as ee01a00 on
+  2026-11-03 with local checks only: the iOS CI job never got a `macos-26` runner (3 of 3 runs, zero steps), and
+  Noah chose "merge now, then fix CI".
+- PR #10 (`ci/ios-macos-15`): iOS CI moved to `macos-15`. If its iOS job runs and passes, merge it. If it also never
+  starts, close it and rerun the `macos-26` job later (`gh run rerun <id>`). Its iOS CI job
   (`build-and-test`) timed out at 15 min on the slow runner; local `swift test` 38/38 and `xcodebuild test` passed.
   Original design notes: Draft merge module at
   `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
@@ -62,7 +66,7 @@
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- 6608a03 (main, PR #7 merged 2026-11-03; Pages redeploy running).
+- ee01a00 (main, PR #6 iCloud saves merged 2026-11-03).
 
 ## Model + timestamp
 - Claude Code (claude-opus-5-5), 2026-11-03 EST.
