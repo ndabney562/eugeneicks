@@ -15,6 +15,14 @@ Status as of Oct 30, 2026. **[Noah]** marks steps only Noah can do (Apple accoun
 - Consent: Noah has OK'd it with everyone the game depicts or names (confirmed Oct 30, 2026).
   Noah approved the painted cap the same day.
 
+## Store page (filled 2026-11-03 through the API)
+- Done by Claude with the App Manager key: subtitle, description, keywords, promotional text, support/marketing/privacy
+  URLs, copyright "2026 STAN Gaming", Games › Action + Casual, age rating answers below, no third-party content, free,
+  United States only, 6 screenshots at each of the 3 sizes. Scripts and the approved copy (`listing.json`):
+  `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/app-store-listing/` (`listing.py <step>`, `screenshots.py`).
+- iOS version is 1.0 (App Store version record "1.0"); the web build keeps its own version.
+- Still Noah's (not in the API): App Privacy "Data Not Collected", App Review contact details, the final Submit.
+
 ## Before the first upload
 1. **[Noah] App Store Connect record.** Bundle ID `com.ndabney562.eugeneicks`, name "EUGENEICKS"
    (must be unique on the store), primary category Games › Action.

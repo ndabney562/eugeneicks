@@ -21,6 +21,6 @@ Goal: an App Store-ready iPhone game. Status from HANDOFF.md and docs/HANDOFF-AR
 - [x] iCloud saves (scorecard row 6)
 - [x] Accessibility: larger-text option, germ tells that don't rely on colour (row 9)
 - [x] App Store Connect record and Game Center upload (Noah)
-- [ ] Bluetooth controller checked on the iPhone
+- [x] Bluetooth controller checked on the iPhone
 - [x] TestFlight build played on a real iPhone
 - [ ] Submitted for App Store review

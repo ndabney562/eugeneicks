@@ -69,8 +69,8 @@
    Manager key can archive but not upload ("Cloud signing permission error"). For later builds, either Noah uploads
    from the Organizer (Claude archives and opens it with `open <xcarchive>`), or Noah makes an Admin API key.
 3b. [Done 2026-11-03] Noah played the TestFlight build: Game Center sign-in, achievements and iCloud saves all work.
-4. [Assigned: Noah] With a Bluetooth controller paired to the iPhone, check it moves Eugene in the app. If yes,
-   Claude adds the `GCSupportedGameControllers` Info.plist keys. If no, Claude bridges GameController.framework.
+4. [Done 2026-11-03] Noah: a Bluetooth controller moves Eugene in the app. PR #20 adds `GCSupportsControllerUserInteraction`
+   and `GCSupportedGameControllers` (ExtendedGamepad) to `ios/Config/Info.plist`.
 5. [Assigned: Noah] Delete the old app from the iPhone (its bundle ID changed, so the new build installs alongside).
 
 ## Blockers
