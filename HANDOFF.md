@@ -28,9 +28,13 @@
 - 2026-11-03: PR #7 merged (title tabs no longer overlap on narrow phones). It fixes the Pages deploy, which had
   failed since #5 on the menu-design e2e test, so the live site was stuck on the build from before #3.
 - 2026-11-03: iCloud saves (PR #6) passed Noah's iPhone test: he deleted the app, Claude reinstalled it, and his
-  record and coins came back from iCloud. Not tried on the iPad (none was plugged in). Its iOS CI job
-  (`build-and-test`) timed out at 15 min on the slow runner; local `swift test` 38/38 and `xcodebuild test` passed.
-  Original design notes: Draft merge module at
+  record and coins came back from iCloud. Not tried on the iPad (none was plugged in). Merged as ee01a00 on
+  2026-11-03 with local checks only: the iOS CI job never got a `macos-26` runner (3 of 3 runs, zero steps), and
+  Noah chose "merge now, then fix CI".
+- iOS CI has never run in this repo. PR #10 tried `macos-15` and was closed: it wasn't acquired either, and GitHub's
+  annotation says macOS arm64 runners are short on capacity. Keep `macos-26`; rerun the iOS job later
+  (`gh run list --workflow ios.yml`, then `gh run rerun <id>`) and check it passes on main's ee01a00.
+- iCloud saves design notes (built in #6): draft merge module at
   `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
   totals take the max, achievements and purchases union, spendable balances from the device that played last). Plan:
   game posts `{type:'cloudSave', gen, blob}` with each snapshot; app keeps it in `NSUbiquitousKeyValueStore`
@@ -40,6 +44,7 @@
 
 ## Next step (exact)
 1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
+1a. [Assigned: Claude Code] Rerun iOS CI on main (see In progress) until a runner picks it up.
 2. [Assigned: Claude Code] Accessibility (row 9: larger-text option, germ tells that don't rely on colour).
 3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
    `eugeneicks`), make an App Manager API key, paste the Issuer ID. Claude then runs
@@ -62,7 +67,7 @@
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- 6608a03 (main, PR #7 merged 2026-11-03; Pages redeploy running).
+- ee01a00 (main, PR #6 iCloud saves merged 2026-11-03).
 
 ## Model + timestamp
 - Claude Code (claude-opus-5-5), 2026-11-03 EST.
