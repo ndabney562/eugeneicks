@@ -64,8 +64,11 @@
    achievements and 3 leaderboards uploaded (re-run dry run: 34 exist, 0 to create). API key: App Manager,
    `~/Downloads/AuthKey_8N39839RBM.p8` (mode 600), issuer ID in Noah's chat; reuse it for TestFlight uploads. The
    script needs `pyjwt cryptography requests` (use a venv).
-3a. [Assigned: Claude Code] First TestFlight build (docs/APP-STORE.md steps 3-5); Game Center only shows up in
-   TestFlight/App Store builds.
+3a. [Assigned: Noah] First TestFlight upload. Claude archived 0.35.0 (44) from main 403eb2f (it's in Xcode's
+   Organizer); the API upload failed with "Cloud signing permission error": an App Manager key can't create the
+   distribution certificate (needs an Admin key). Noah: Xcode → Window → Organizer → Distribute App → App Store
+   Connect → Upload. After the first upload, Claude can upload later builds with the same key, once a distribution
+   certificate exists on this Mac. Game Center only shows up in TestFlight/App Store builds.
 4. [Assigned: Noah] With a Bluetooth controller paired to the iPhone, check it moves Eugene in the app. If yes,
    Claude adds the `GCSupportedGameControllers` Info.plist keys. If no, Claude bridges GameController.framework.
 5. [Assigned: Noah] Delete the old app from the iPhone (its bundle ID changed, so the new build installs alongside).
