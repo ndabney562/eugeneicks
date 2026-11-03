@@ -21,6 +21,9 @@ Status as of Oct 30, 2026. **[Noah]** marks steps only Noah can do (Apple accoun
   United States only, 6 screenshots at each of the 3 sizes. Scripts and the approved copy (`listing.json`):
   `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/app-store-listing/` (`listing.py <step>`, `screenshots.py`).
 - iOS version is 1.0 (App Store version record "1.0"); the web build keeps its own version.
+- Game Center on the version: the first submission needs a `gameCenterAppVersions` record for the App Store
+  version plus an achievement/leaderboard release for each item (`gameCenterAchievementReleases`,
+  `gameCenterLeaderboardReleases`); without them "Add for Review" says to tick the Game Center checkbox.
 - Still Noah's (not in the API): App Privacy "Data Not Collected", App Review contact details, the final Submit.
 
 ## Before the first upload
