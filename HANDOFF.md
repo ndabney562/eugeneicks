@@ -26,6 +26,10 @@
   tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
+- 2026-11-03: App Store submission. Store page filled through the API (see docs/APP-STORE.md "Store page"). PR #20
+  merged on local checks with Noah's OK (iOS CI not acquired again): controller badge keys, iOS version 1.0.
+  Archive 1.0 (53) from main 9f76e50 is in Xcode's Organizer for Noah to Distribute. Noah still does: App Privacy
+  "Data Not Collected" + Publish, App Review contact info + notes, pick build 53, Add for Review, Submit.
 - 2026-11-03, PR #14 merged (3a97c4f): PA Jin renamed Jaykwellen (Noah's call; id stays `jin` so saves and unlocks keep working;
   short/chart/surname JAYKWELLEN, fits the roster card and health bar). Feet step half as often
   (`DISPLAY.walk.stride` 46 → 92, Noah: "too fast, make 50% the speed").
