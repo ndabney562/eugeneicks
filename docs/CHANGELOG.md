@@ -8,6 +8,8 @@
   happens on the title screen, never mid-shift. Settings and a paused shift stay on each device.
 - **Easier menu tabs.** The title's PROVIDERS, LOCKER, BOARD, ATLAS and LEADERBOARD tabs are bigger, sit a little
   lower and closer to the middle, and the whole pill takes the tap.
+- **Menu tabs fit on phones.** On a narrow phone the title's tabs spread back out across the top, and shrink only as
+  much as they must, instead of running into each other.
 - **Walking feet.** Eugene, the Pals and patients now take real steps: two shoes peek out from under them and
   alternate as they walk, with a little bob on each footfall, and settle side by side when they stop. Tatiana
   floats, so no feet. Reduce Motion turns the bob off; the feet still step.

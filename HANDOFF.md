@@ -25,8 +25,12 @@
   tap (`DISPLAY.titleTabs`). Noah found them hard to press.
 
 ## In progress
-- iCloud saves: design drafted, not started in the repo. Draft merge module at
-  `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
+- 2026-11-03: PR #7 merged (title tabs no longer overlap on narrow phones). It fixes the Pages deploy, which had
+  failed since #5 on the menu-design e2e test, so the live site was stuck on the build from before #3.
+- iCloud saves: built in PR #6 (`feat/icloud-saves`), waiting on Noah's real-device test. Its iOS CI job
+  (`build-and-test`) timed out at 15 min on the slow runner; local `swift test` 38/38 and `xcodebuild test` passed.
+  Original design notes: Draft merge module at
+  `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
   totals take the max, achievements and purchases union, spendable balances from the device that played last). Plan:
   game posts `{type:'cloudSave', gen, blob}` with each snapshot; app keeps it in `NSUbiquitousKeyValueStore`
   (entitlement `com.apple.developer.ubiquity-kvstore-identifier`), sends the cloud copy to the game on `ready` and on
@@ -35,8 +39,9 @@
 
 ## Next step (exact)
 1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
-2. [Assigned: Claude Code] iCloud saves (scorecard row 6) per the plan above, then accessibility (row 9: larger-text
-   option, germ tells that don't rely on colour).
+2. [Assigned: Noah] Install PR #6's build on the iPhone and iPad (same Apple ID), play on one, open the other, check
+   records carry over. Then Claude merges #6.
+2a. [Assigned: Claude Code] Accessibility (row 9: larger-text option, germ tells that don't rely on colour).
 3. [Assigned: Noah] App Store Connect: create the app record (bundle ID `com.ndabney562.eugeneicks`, SKU
    `eugeneicks`), make an App Manager API key, paste the Issuer ID. Claude then runs
    `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-game-center/scripts/upload.py <AuthKey.p8> <issuer>`
@@ -56,10 +61,10 @@
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- 4c2b246 (main, PR #4 merged; Pages live at https://ndabney562.github.io/eugeneicks/, 2026-11-02).
+- 6608a03 (main, PR #7 merged 2026-11-03; Pages redeploy running).
 
 ## Model + timestamp
-- Claude Code (claude-opus-5-5), 2026-11-02 EST.
+- Claude Code (claude-opus-5-5), 2026-11-03 EST.
 
 ## Read first
 - CLAUDE.md, AGENTS.md, PROJECT.md, docs/ROADMAP.md, docs/MY_CONTRIBUTIONS.md, docs/APP-STORE.md.

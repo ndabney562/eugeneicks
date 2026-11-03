@@ -242,15 +242,11 @@ export function renderMenuTopPanel(
       const navStartX = docPillX + docPillW + 8;
       const navEndX = statsPillX - 8;
       const navAvailW = Math.max(340, navEndX - navStartX);
-      const navW = Math.max(340, navAvailW * DISPLAY.titleTabs.widthShare);
-      const navLeft = navStartX + (navAvailW - navW) / 2;
-      const slot = navW / titleTabs.length;
-      const tabY = centerY + DISPLAY.titleTabs.drop;
-
-      titleTabs.forEach((tab, i) => {
-        const btn = tabButtons.get(tab.id);
-        if (btn) {
-          const k = DISPLAY.titleTabs.scale;
+      const k = DISPLAY.titleTabs.scale;
+      const sizeTabs = (slot: number) => {
+        for (const tab of titleTabs) {
+          const btn = tabButtons.get(tab.id);
+          if (!btn) continue;
           if (slot < 92 * k) {
             btn.setFontSize(Math.round(10 * k)).setPadding(5 * k, 5 * k);
           } else if (slot < 115 * k) {
@@ -258,6 +254,29 @@ export function renderMenuTopPanel(
           } else {
             btn.setFontSize(Math.round(13 * k)).setPadding(10 * k, 7 * k);
           }
+        }
+      };
+      const fits = (slot: number) => titleTabs.every((tab) => (tabButtons.get(tab.id)?.width ?? 0) <= slot - 4);
+      // Gathered toward the middle when the tabs fit there; on a narrow phone the row spreads back out to the full
+      // width between the pills, and any tab still too wide for its slot shrinks, so no two tabs run into each other
+      let navW = Math.max(340, navAvailW * DISPLAY.titleTabs.widthShare);
+      sizeTabs(navW / titleTabs.length);
+      if (!fits(navW / titleTabs.length) && navW < navAvailW) {
+        navW = navAvailW;
+        sizeTabs(navW / titleTabs.length);
+      }
+      const navLeft = navStartX + (navAvailW - navW) / 2;
+      const slot = navW / titleTabs.length;
+      const tabY = centerY + DISPLAY.titleTabs.drop;
+      for (const tab of titleTabs) {
+        const btn = tabButtons.get(tab.id);
+        let size = btn ? parseFloat(String(btn.style.fontSize)) : 0;
+        while (btn && btn.width > slot - 4 && size > 8) btn.setFontSize(--size);
+      }
+
+      titleTabs.forEach((tab, i) => {
+        const btn = tabButtons.get(tab.id);
+        if (btn) {
           const btnX = navLeft + slot * (i + 0.5);
           btn.setPosition(btnX, tabY);
           const pw = Math.min(slot - 4, btn.width + 4);
