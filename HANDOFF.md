@@ -26,7 +26,7 @@
 
 ## In progress
 - iCloud saves: design drafted, not started in the repo. Draft merge module at
-  `~/Desktop/AI.Stuff/Apps & Games/Local.Stuff/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
+  `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/eugeneicks-cloud-save-draft.ts` (merge rule: records/kills/lifetime
   totals take the max, achievements and purchases union, spendable balances from the device that played last). Plan:
   game posts `{type:'cloudSave', gen, blob}` with each snapshot; app keeps it in `NSUbiquitousKeyValueStore`
   (entitlement `com.apple.developer.ubiquity-kvstore-identifier`), sends the cloud copy to the game on `ready` and on
