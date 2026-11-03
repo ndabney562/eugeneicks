@@ -2,6 +2,8 @@
 
 ## Unreleased: EUGENEICKS
 
+- **Controller badge.** The iPhone and iPad app tells iOS it supports game controllers (extended gamepad), so the
+  App Store can show it. Noah checked a Bluetooth controller moves Eugene in the app.
 - **PA Jin is now Jaykwellen.** Same provider, same abilities and unlocks; only the name changes (roster, health bar,
   chart, call-outs).
 - **Calmer feet.** Characters take half as many steps for the same distance.
