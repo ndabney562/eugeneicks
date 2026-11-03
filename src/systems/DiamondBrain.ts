@@ -6,6 +6,7 @@ import { DIAMOND_LINES } from '../data/diamond';
 import type { Germ } from '../entities/Germ';
 import type { Player } from '../entities/Player';
 import { SpeechBubble } from '../ui/SpeechBubble';
+import { scalable } from '../ui/textScale';
 import { firstClear } from '../core/clearance';
 
 /** What the brain needs from the game scene. */
@@ -55,10 +56,10 @@ export class DiamondBrain {
     const now = host.scene.time.now;
     this.bubble = new SpeechBubble(host.scene);
     this.tape = host.scene.add.graphics().setDepth(11);
-    this.hint = host.scene.add.text(0, 0, 'SPRAY HER TO BREAK FREE!', {
+    this.hint = scalable(host.scene.add.text(0, 0, 'SPRAY HER TO BREAK FREE!', {
       fontFamily: 'system-ui, sans-serif', fontSize: '15px', fontStyle: 'bold', color: '#ffffff',
       stroke: '#3a1030', strokeThickness: 4,
-    }).setOrigin(0.5, 1).setDepth(31).setVisible(false);
+    })).setOrigin(0.5, 1).setDepth(31).setVisible(false);
     this.nextMeetingAt = now + this.cfg.meetingFirstMs;
     this.nextChatterAt = now + Phaser.Math.Between(...this.cfg.chatterMs);
     // Let her finish squeezing through the door before the first complaint

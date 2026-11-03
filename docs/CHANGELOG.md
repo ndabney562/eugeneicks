@@ -2,6 +2,11 @@
 
 ## Unreleased: EUGENEICKS
 
+- **Large text.** A new LARGE TEXT switch in the pause menu draws the small labels 30% bigger: score, copays, room
+  and shift tags, tool name, power-up timers, tips, achievement toasts, trap signs, scribe markers, elite tags and
+  boss hints. It applies at once and is remembered.
+- **"!" before a germ attacks.** A Sneezer about to sneeze and a Bacillus Bulldozer about to charge now show a
+  bobbing yellow "!" over their heads, so the warning no longer relies on the red flash alone.
 - **iCloud saves (iPhone and iPad app).** Your records, Pals, purchases, achievements and balances follow your
   Apple ID: a second device or a reinstall picks them up. Playing on two devices merges them, so nothing earned on
   either is lost (the best records, every unlock, and the balances of whichever device played last). The merge

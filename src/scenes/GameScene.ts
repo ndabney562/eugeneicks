@@ -61,6 +61,7 @@ import { SignFader } from '../systems/SignFader';
 import { SCRIBES, scribeById, type ScribeId } from '../data/scribes';
 import { Sprayer } from '../systems/Sprayer';
 import { WaveDirector } from '../systems/WaveDirector';
+import { scalable } from '../ui/textScale';
 
 /** A door still waiting to be bought open, with the pieces to remove when it is. */
 interface LockedDoor {
@@ -3079,10 +3080,10 @@ export class GameScene extends Phaser.Scene {
   /** Placeholder drawing for each obstacle type. Real sprites replace this later. */
   /** A small sign over a trap or machine. */
   private trapLabel(o: Obstacle, text: string): void {
-    this.signs.track(this.add.text(o.x + o.w / 2, o.y - 6, text, {
+    this.signs.track(scalable(this.add.text(o.x + o.w / 2, o.y - 6, text, {
       fontFamily: 'system-ui, sans-serif', fontSize: '14px', fontStyle: 'bold', color: '#ffffff',
       backgroundColor: '#0d2b2ecc', padding: { x: 6, y: 2 },
-    }).setOrigin(0.5, 1).setDepth(6));
+    })).setOrigin(0.5, 1).setDepth(6));
   }
 
   private drawObstacle(g: Phaser.GameObjects.Graphics, o: Obstacle): void {

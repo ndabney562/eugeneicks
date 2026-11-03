@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { BALANCE } from '../config/balance';
+import { scalable } from '../ui/textScale';
 import { events, GameEvents } from '../core/events';
 import { staffBoost } from '../core/progress';
 import { settings } from '../core/settings';
@@ -223,12 +224,12 @@ export class Scribes {
       });
     }
     if (this.host.scene.add?.text) {
-      markerText = this.host.scene.add.text(target.x, target.y - 28, target.label, {
+      markerText = scalable(this.host.scene.add.text(target.x, target.y - 28, target.label, {
         fontSize: '11px',
         color: '#ffd166',
         stroke: '#000000',
         strokeThickness: 3,
-      }).setOrigin(0.5).setDepth(9.6);
+      })).setOrigin(0.5).setDepth(9.6);
     }
     s.distraction = {
       kind: 'distraction',
@@ -276,12 +277,12 @@ export class Scribes {
       });
     }
     if (this.host.scene.add?.text) {
-      markerText = this.host.scene.add.text(target.x, target.y - 28, 'PATIENT IMAGING', {
+      markerText = scalable(this.host.scene.add.text(target.x, target.y - 28, 'PATIENT IMAGING', {
         fontSize: '11px',
         color: '#c8ffe6',
         stroke: '#000000',
         strokeThickness: 3,
-      }).setOrigin(0.5).setDepth(9.6);
+      })).setOrigin(0.5).setDepth(9.6);
     }
     s.distraction = {
       kind: 'imaging',

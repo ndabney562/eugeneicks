@@ -19,7 +19,7 @@ Goal: an App Store-ready iPhone game. Status from HANDOFF.md and docs/HANDOFF-AR
 - [x] Walking feet and bigger title tabs
 - [x] App Store screenshots (6.9", 6.5", 13" iPad)
 - [x] iCloud saves (scorecard row 6)
-- [ ] Accessibility: larger-text option, germ tells that don't rely on colour (row 9)
+- [x] Accessibility: larger-text option, germ tells that don't rely on colour (row 9)
 - [ ] App Store Connect record and Game Center upload (Noah)
 - [ ] Bluetooth controller checked on the iPhone
 - [ ] TestFlight build played on a real iPhone
