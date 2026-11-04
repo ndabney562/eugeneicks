@@ -67,8 +67,11 @@
    If Apple rejects it, read the Resolution Center message (Noah pastes it) and fix.
 1. [Done 2026-11-04] Noah tried the feet and tabs on the iPhone: "looks good".
 1a. [Assigned: Claude Code] iOS CI never gets a runner: every run since 2026-11-03 (macos-26 on main, macos-15 on
-   `ci/ios-macos-15`) sat with no runner and was cancelled. Reruns don't help; find out why GitHub's macOS runners
-   never start for this repo before trying again. Local `swift test` and `xcodebuild test` still work.
+   `ci/ios-macos-15`) sat with no runner and was cancelled. GitHub's annotation: "The job was not acquired by Runner
+   of type hosted even after multiple attempts" / "Due to capacity constraints, jobs targeting macOS arm64 runners
+   may experience longer queue times". It's GitHub's capacity, not this repo, so switching the macOS label doesn't help.
+   Until it clears, local `swift test` and `xcodebuild test` on Noah's Mac are the iOS gate. Don't add a self-hosted
+   runner: the repo is public, so outside PRs could run code on the Mac.
 2. [Done 2026-11-04] Noah tried the slower feet and the "!" on a Sneezer: "looks good". Optional follow-up: a LARGE
    TEXT switch in the app's native Settings screen (needs `ios/` changes, so iOS CI).
 3. [Done 2026-11-03] App Store Connect record EUGENEICKS (app ID 6830328638, SKU `eugeneicks`). Game Center on, 34
