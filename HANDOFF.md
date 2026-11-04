@@ -6,6 +6,8 @@
   public-facing. Standing order "always merge": merge green PRs without asking.
 
 ## Done
+- 2026-11-04, PR #23 merged (109ff4d): the offline PWA sound check (`tests/e2e/pwa.spec.ts`) now waits 30 s on
+  WebKit. CI `build-and-smoke-test` passed on both runs (a cancelled duplicate push run was re-run to pass).
 - 2026-11-03: App Store Connect record created (Noah); Claude uploaded Game Center (34 achievements, 3 leaderboards).
 - 2026-11-02: the game moved to a fresh public repo, `ndabney562/eugeneicks`, with one starting commit. Noah wanted
   the game's former name and Eugene's real surname gone everywhere (locally and online). Eugene has no surname in
@@ -96,10 +98,10 @@
   passed; `swift test` EugeneicksKit 29/29; `xcodebuild test` UI tests 5 passed, 1 skipped (screenshots).
 
 ## Last commit hash
-- 3a97c4f (main, PR #14 Jaykwellen + slower feet merged 2026-11-03).
+- 109ff4d (main, PR #23 PWA sound check timeout merged 2026-11-04).
 
 ## Model + timestamp
-- Claude Code (claude-opus-5-5), 2026-11-03 EST.
+- Claude Code (claude-opus-5-5), 2026-11-04 EST.
 
 ## Read first
 - CLAUDE.md, AGENTS.md, PROJECT.md, docs/ROADMAP.md, docs/MY_CONTRIBUTIONS.md, docs/APP-STORE.md.
