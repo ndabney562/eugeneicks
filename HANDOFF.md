@@ -62,12 +62,17 @@
   screen, never mid-shift; reload `progress.ts`/`achievements.ts` state after a merge.
 
 ## Next step (exact)
-0. [Assigned: Claude Code] Check the review: `ASC_KEY=~/Downloads/AuthKey_8N39839RBM.p8 ASC_ISSUER=<Noah's issuer ID>`
+0. [Assigned: Claude Code] 2026-11-04: still WAITING_FOR_REVIEW (submitted 2026-11-03 22:10 UTC). Check the review: `ASC_KEY=~/Downloads/AuthKey_8N39839RBM.p8 ASC_ISSUER=<Noah's issuer ID>`
    then `appStoreVersions` state (scripts in `~/Desktop/AI.Stuff/Apps.Games/Local.Stuff/eugeneicks/app-store-listing/`).
    If Apple rejects it, read the Resolution Center message (Noah pastes it) and fix.
-1. [Assigned: Noah] Try the new feet and tabs on the iPhone; say if the shoes want colours per character.
-1a. [Assigned: Claude Code] Rerun iOS CI on main (`gh run rerun 41680963554`) until a runner picks it up.
-2. [Assigned: Noah] Try the slower feet and the "!" on a Sneezer on the iPhone. Optional follow-up: a LARGE
+1. [Done 2026-11-04] Noah tried the feet and tabs on the iPhone: "looks good".
+1a. [Assigned: Claude Code] iOS CI never gets a runner: every run since 2026-11-03 (macos-26 on main, macos-15 on
+   `ci/ios-macos-15`) sat with no runner and was cancelled. GitHub's annotation: "The job was not acquired by Runner
+   of type hosted even after multiple attempts" / "Due to capacity constraints, jobs targeting macOS arm64 runners
+   may experience longer queue times". It's GitHub's capacity, not this repo, so switching the macOS label doesn't help.
+   Until it clears, local `swift test` and `xcodebuild test` on Noah's Mac are the iOS gate. Don't add a self-hosted
+   runner: the repo is public, so outside PRs could run code on the Mac.
+2. [Done 2026-11-04] Noah tried the slower feet and the "!" on a Sneezer: "looks good". Optional follow-up: a LARGE
    TEXT switch in the app's native Settings screen (needs `ios/` changes, so iOS CI).
 3. [Done 2026-11-03] App Store Connect record EUGENEICKS (app ID 6830328638, SKU `eugeneicks`). Game Center on, 34
    achievements and 3 leaderboards uploaded (re-run dry run: 34 exist, 0 to create). API key: App Manager,
