@@ -38,9 +38,10 @@ test('a controlled PWA reloads the game during a transport outage', async ({ pag
     await page.reload();
     await active(page, 'Title');
     await expect(page.locator('canvas')).toBeVisible();
-    // The recorded sound effects come from the offline cache too
+    // The recorded sound effects come from the offline cache too. WebKit on CI can take longer than the default
+    // 15 s to decode all five after an offline reload (failed twice on main, passed on rerun), so give it 30 s.
     await expect.poll(() => page.evaluate(() => ['spray', 'pop', 'sneeze', 'boss', 'purge']
-      .every((n) => window.game.cache.audio.get(`sfx-${n}`) instanceof AudioBuffer))).toBe(true);
+      .every((n) => window.game.cache.audio.get(`sfx-${n}`) instanceof AudioBuffer)), { timeout: 30_000 }).toBe(true);
   } finally {
     await page.close();
     await server.close();
